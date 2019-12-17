@@ -202,6 +202,7 @@ include_once './constants.php';
                             <span class="sr-only  mx-0">Loading...</span>
                         </div>
                     </div>
+                    
                     <div class="table-data-content">
                         <table class="table table-bordered table-responsive-lg my-4">
                             <tr class="text-success" style="background-color: #e9e9e9;">
