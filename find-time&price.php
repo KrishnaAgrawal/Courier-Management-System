@@ -261,21 +261,18 @@ include_once './constants.php';
                     </div>
                 </div>
                 <div class="container">
-                    <form action="code/ajaxRequest.php?action=timeAndPrice" method="post">
+                    <form>
                         <div class="form-row">
                             <div class="form-group col-md-6 autocomplete">
                                 <label for="from" class="font-weight-bold">From<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" onclick="hideTable()" 
-                                       onBlur="$('#from-box').hide();"
+                                <input type="text" autocomplete="off" class="form-control" onclick="hideTable()" 
                                        onkeyup="getFromAddressData(this.value);trimTheInput(this.value)"  name="from" id="from"
                                        placeholder="Enter a Location or Pincode">
                                 <div id="from-box" style="display: none;"></div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="to" class="font-weight-bold">To<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" 
-                                       onclick="hideTable()" 
-                                       onBlur="$('#to-box').hide();"
+                                <input type="text" autocomplete="off" class="form-control" onclick="hideTable()" 
                                        onkeyup="getToAddressData(this.value)" name="to" id="to"
                                        placeholder="Enter a Location or Pincode">
                                 <div id="to-box" style="display: none;"></div>

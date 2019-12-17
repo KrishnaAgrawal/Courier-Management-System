@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <?php
 include_once './constants.php';
+$result = [];
+if(!empty($arrPost = $_POST)){
+    if(!empty($arrPost['Find'])){
+        include_once './code/ajaxRequest.php';
+        include_once './code/Utilities.php';
+        $result = getResultAddressOfGivenLoaction($arrPost);
+    }
+//    echo '<pre>';print_r($result);exit;
+}
 ?>
 <html>
     <head>
@@ -9,6 +18,9 @@ include_once './constants.php';
         <?php include_once './linksAndScripts.php'; ?>
         <link href="css/index.css" rel="stylesheet" type="text/css"/>
         <style>
+            html{
+                scroll-behavior: smooth;
+            }
             .animation{
                 animation:blinkingText 1s infinite;
                 color: red;
@@ -60,8 +72,8 @@ include_once './constants.php';
         </style>
         <script>
             function checkBlank(){
-                from = $("#from").val();
-                if (from.length > 0 && from.length != 0){    
+                location = $("#location").val();
+                if (location.length > 0 && location.length != 0){    
 //                    beforeSend: function(){
                                 // Show image container
 //                                $(".handle-spinner").show();
@@ -81,21 +93,21 @@ include_once './constants.php';
             /*
              * getAddressData()
              */
-            function getFromAddressData(from){
-                $("#from").val(trimTheInput(from));
+            function getFromAddressData(location){
+                $("#location").val(trimTheInput(location));
                 $.ajax({
                     url: "code/ajaxRequest.php?action=from",
                     type: 'POST',
 //                    dataType: 'JSON',
-                    data: {from: from},
+                    data: {from: location},
                     beforeSend: function(){
                         // Show image container
 //                        $(".handle-spinner").show();
                        },
                     success: function (result) {
-                        $("#from-box").show();
-                        $("#from-box").html(result);
-                        $("#from").css("background", "#FFF");
+                        $("#location-box").show();
+                        $("#location-box").html(result);
+                        $("#location").css("background", "#FFF");
                         if (result == "ERROR") {
                         }
                     },
@@ -112,8 +124,8 @@ include_once './constants.php';
             }
             
             function selectFrom(val) {
-                $("#from").val(val);
-                $("#from-box").hide();
+                $("#location").val(val);
+                $("#location-box").hide();
             }
             
             /*
@@ -124,7 +136,6 @@ include_once './constants.php';
             }
         </script>
     </head>
-     <!--onload="hideTable()"-->
     <body class="bg-light" oncontextmenu="return false;">
         <noscript>
         <meta HTTP-EQUIV="refresh" content=0;url="javascriptNotEnabled.html">
@@ -175,38 +186,49 @@ include_once './constants.php';
                         </a>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-3" id="top">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-3">
                         <h3 class="font-weight-bold text-center">Find your Serviceable Area</h3>
                     </div>
                 </div>
                 <div class="container">
-                    <form>
+                    <form action="location-finder.php" method="post">
                         <div class="form-row">
                             <div class="form-group col-md-6 autocomplete">
-                                <label for="from" class="font-weight-bold">Location<sup class="text-danger">*</sup></label>
-                                <input type="text" class="form-control" onclick="hideTable()" 
-                                       onBlur="$('#from-box').hide();"
-                                       onkeyup="getFromAddressData(this.value);trimTheInput(this.value)"  name="from" id="from"
+                                <label for="location" class="font-weight-bold">Location<sup class="text-danger">*</sup></label>
+                                <input type="text" class="form-control" onclick="hideTable()" autocomplete="off"
+                                       onkeyup="getFromAddressData(this.value);trimTheInput(this.value)"  name="location" id="location"
+                                       required=""
                                        placeholder="Enter a Location or Pincode">
-                                <div id="from-box" style="display: none;"></div>
+                                <div id="location-box" style="display: none;"></div>
                             </div>
                         </div>
                         <i class="requiredFields"><sup class="text-danger font-weight-bold">*</sup>Indicates required fields.</i>
                         <br />
-                        <input type="button" onclick="checkBlank();hideTable();" class="btn btn-success mt-2" value="Find" />
+                        <input type="submit" name="Find" onclick="hideTable();" class="btn btn-success mt-2" value="Find" />
                         <input type="reset" onclick="hideTable()" class="btn btn-success mt-2" value="Reset" />
                     </form>
-                    <div class="text-center handle-spinner" style="display: none;">
-                        <div class="spinner-border " role="status">
-                            <span class="sr-only  mx-0">Loading...</span>
+                    <?php
+                    include_once './goToTop.php';
+                    $totalCount = 0;
+                    if(!empty($result)){
+                        if($result->num_rows > 0){
+                            $totalCount = $result->num_rows;
+                    ?>
+                    <div class="row">
+                        <div class="col">
+                            <span class="btn btn-lg btn-info float-right">
+                                <i class="fas fa-address-card"> <?=$totalCount?></i>
+                            </span>
                         </div>
                     </div>
-                    
-                    <div class="table-data-content">
+                    <?php
+                            while ($rows = $result->fetch_array()){
+                    ?>
+                    <!--<div class="table-data-content">-->
                         <table class="table table-bordered table-responsive-lg my-4">
                             <tr class="text-success" style="background-color: #e9e9e9;">
-                                <th colspan="2">Pincode: 273001</th>
+                                <th colspan="2">Pincode: <?=$rows['int_pincode']?></th>
                                 <th>Services</th>
                                 <th>Pickup</th>
                                 <th>Delivery</th>
@@ -214,28 +236,58 @@ include_once './constants.php';
                             <tr class="">
                                 <td rowspan="2"><i class="fas fa-home"></i></td>
                                 <td rowspan="2">
-                                    Gorakhpur, <br />
-                                    Ghaziabad, <br />
-                                    UP
+                                    <?=((!empty($rows['txt_sub_office']) && $rows['txt_sub_office']!="NA")? $rows['txt_sub_office'].", " : "")?> 
+                                    <?=((!empty($rows['txt_head_office']) && $rows['txt_head_office']!="NA")? $rows['txt_head_office'].",<br />" : "")?>
+                                    <?=(!empty($rows['txt_district_name'])? $rows['txt_district_name'].",<br />" : "")?> 
+                                    <?=(!empty($rows['txt_state_name'])? $rows['txt_state_name']."" : "")?>
                                 </td>
                                 <th>Document</th>
-                                <td class="text-center btn-lg"><span class="badge badge-success documentDelivery"></span></td>
-                                <td class="text-center btn-lg"><span class="badge badge-success documentPickup"></span></td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_delivery']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_delivery']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_pickup']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_pickup']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
                             </tr>
                             <tr class="">
                                 <th>Air Package</th>
-                                <td class="text-center btn-lg"><span class="badge badge-success airDelivery"></span></td>
-                                <td class="text-center btn-lg"><span class="badge badge-danger airPickup"></span></td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_delivery']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_delivery']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_pickup']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_pickup']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
                             </tr>
                             <tr class="">
                                 <td><i class="fas fa-phone-alt"></i></td>
                                 <td><?=MOBILE?></td>
                                 <th>Ground</th>
-                                <td class="text-center btn-lg"><span class="badge badge-success groundDelivery"></span></td>
-                                <td class="text-center btn-lg"><span class="badge badge-success groundPickup"></span></td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_delivery']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_delivery']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
+                                <td class="text-center btn-lg">
+                                    <span class="badge badge-<?=($rows['ysn_pickup']==0 ? "danger" : "success")?> documentDelivery">
+                                        <?=($rows['ysn_pickup']==0 ? "No" : "Yes")?>
+                                    </span>
+                                </td>
                             </tr>
                         </table>
-                    </div>
+                    <!--</div>-->
+                    <?php
+                            }   
+                        }
+                    }
+                    ?>
                         <!--Horizontal line-->
                         <div class="col mt-5">
                             <div class="col border-top border-width-2 mb-4"></div>

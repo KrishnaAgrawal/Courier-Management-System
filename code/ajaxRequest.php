@@ -14,6 +14,8 @@ switch ($action) {
         break;;
     case "to" : getToSource($arrPost);
         break;
+    case "locationFinder" : getResultAddressOfGivenLoaction($arrPost);
+        break;
 //    default : echo 111;exit;
 }
 
@@ -157,11 +159,15 @@ function getToSource($arrPost) {
 /*
  * get result
  */
-function getFullAddress($address){
-    include_once './Utilities.php';
+function getFullAddress($address, $removeLimit=0){
+    @include_once './Utilities.php';
     $utilities = new Utilities();
     $arrAddress = [];
     $str = "";
+    $limit = "LIMIT 0,5";
+    if(!empty($removeLimit)){
+        $limit = "";
+    }
     if (strpos($address, ' ') !== false) {
         $arrAddress = explode(" ", $address);
     }
@@ -187,14 +193,49 @@ function getFullAddress($address){
         $str = preg_replace('/\W\w+\s*(\W*)$/', '$1', $str);
     }
     if (empty($str)) {
-        $str = " tbl_pin_district.txt_district_name LIKE '%" . $address . "%' OR "
-                . "tbl_pin_district.int_pincode LIKE '%" . $address . "%'";
+        $str = " (tbl_pin_district.txt_district_name LIKE '%" . $address . "%' OR "
+                . "tbl_pin_district.int_pincode LIKE '%" . $address . "%') ";
     }
     $query = "SELECT tbl_pin_district.txt_district_name, tbl_address.txt_state_name, tbl_pin_district.int_pincode"
             . " FROM tbl_pin_district ,tbl_address "
             . "WHERE tbl_address.txt_district_name = tbl_pin_district.txt_district_name AND $str"
-            . "ORDER BY tbl_pin_district.txt_district_name LIMIT 0,5";
+            . "ORDER BY tbl_pin_district.txt_district_name $limit";
 //    echo '<pre>';print_r($arrAddress);exit;
     $result = $utilities->selectQuery($query);
     return $result;
+}
+
+/*
+ * get Result Address Of Given Loaction
+ */
+function getResultAddressOfGivenLoaction($arrPost){
+    if(!empty($location = $arrPost['location'])){
+        $removeLimit = 1;
+        if(strpos($location, " - ") !== false){
+            $location = str_replace(" - ", " ", $location);
+        } else if(strpos($location, " -") !== false){
+            $location = str_replace(" - ", " ", $location);
+        } else if(strpos($location, "- ") !== false){
+            $location = str_replace(" - ", " ", $location);
+        } else if(strpos($location, "-") !== false){
+            $location = str_replace(" - ", " ", $location);
+        }
+        $result = getFullAddress($location, $removeLimit);
+        if($result->num_rows > 0){
+            while($rows = $result->fetch_array()){
+                $arrDistrictName[] = $rows['txt_district_name'];
+            }
+            $queryLocation = "SELECT tbl_address.txt_district_name, tbl_address.txt_state_name, tbl_address.txt_number, tbl_address.txt_sub_office, "
+                    . "tbl_address.txt_head_office, tbl_pin_district.ysn_delivery, tbl_pin_district.ysn_pickup, tbl_pin_district.int_pincode "
+                    . " FROM tbl_address, tbl_pin_district WHERE "
+                    . "tbl_pin_district.txt_district_name = tbl_address.txt_district_name AND "
+                    . "tbl_address.txt_district_name IN ("."'" . str_replace(",", "','", implode(',',$arrDistrictName)) . "'".") "
+                    . "ORDER BY tbl_pin_district.int_pincode";
+            $utilities = new Utilities();
+//            echo '<pre>';print_r($queryLocation);exit;
+            $result = $utilities->selectQuery($queryLocation);
+            return $result;
+        }
+        
+    }
 }
