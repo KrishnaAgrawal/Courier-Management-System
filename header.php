@@ -39,9 +39,9 @@
                     About Us
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Anant Couriers</a>
-                    <a class="dropdown-item" href="#">Milestones</a>
-                    <a class="dropdown-item" href="#">Board of Directors</a>
+                    <a class="dropdown-item" href="about-us.php">Anant Couriers</a>
+                    <a class="dropdown-item" href="milestones.php">Milestones</a>
+                    <a class="dropdown-item" href="future-plan.php">Future Plans</a>
                 </div>
             </li>
             <li class="nav-item dropdown menu">
@@ -49,7 +49,7 @@
                     Contact Us
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Call Us</a>
+                    <a class="dropdown-item" href="call-us.php">Call Us</a>
                     <a class="dropdown-item" href="#">Write To Us</a>
                     <a class="dropdown-item" href="#">24 Hours Counters</a>
                 </div>
