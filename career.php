@@ -74,6 +74,137 @@
                                 for our sales force, and our Bravo Award for outstanding performance 
                                 and resourcefulness in the day-to-day processes.
                             </p>
+                            <p>
+                                <h4 class="text-secondary">Our Guiding Principles</h4>
+                            </p>
+                            <p>
+                                <ul>
+                                    <li>We will treat each other fairly and with respect and dignity.</li>
+                                    <li>We will encourage freedom in communication of thoughts and ideas in all our interactions.</li>
+                                    <li>We value integrity and we will be uncompromising in upholding it at all times.</li>
+                                    <li>We will ensure that our People First philosophy serves as a driving force behind the success of our organization.</li>
+                                    <li>We will encourage and inculcate in all a winning attitude.</li>
+                                    <li>We will encourage learning, self-development and building effective leadership.</li>
+                                    <li>We will project a positive, caring and professional image of ourselves and our services at all times.</li>
+                                    <li>We will continue to be a law-abiding, apolitical and secular company.</li>
+                                    <li>We will avoid waste by being conscious of the impact of all our actions on the environment.</li>
+                                </ul>
+                            </p>
+                            <div class="card mt-4">
+                                <div class="card-header bg-secondary text-center">
+                                    <span class="text-white font-weight-bold" >Contact Person</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-3">
+                                                    <span class="font-weight-bold "><u>VARANASI</u></span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">HR-Name: </div>
+                                                </div>
+                                                <div class="media-body mb-3">
+                                                    <span class="font-weight-bold">Uttam Pandey</span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-4">
+                                                    <?= ADDRESS_2 ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-3">
+                                                    <span class="font-weight-bold "><u>GORAKHPUR</u></span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">HR-Name: </div>
+                                                </div>
+                                                <div class="media-body mb-3">
+                                                    <span class="font-weight-bold">Krishna Agrawal</span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-4">
+                                                    <?= ADDRESS_1 ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-3">
+                                                    <span class="font-weight-bold "><u>LUCKNOW</u></span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">HR-Name: </div>
+                                                </div>
+                                                <div class="media-body mb-3">
+                                                    <span class="font-weight-bold">Tanya Sharma</span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-4">
+                                                    <?= ADDRESS_3 ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-3">
+                                                    <span class="font-weight-bold "><u>KAURIRAM - GORAKHPUR</u></span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">HR-Name: </div>
+                                                </div>
+                                                <div class="media-body mb-3">
+                                                    <span class="font-weight-bold">Anjali Sharma</span> <br />
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                </div>
+                                                <div class="media-body ml-2 mb-4">
+                                                    <?= ADDRESS_4 ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

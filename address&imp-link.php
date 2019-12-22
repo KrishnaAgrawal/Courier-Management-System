@@ -8,7 +8,7 @@
                 <h2 class="text-uppercase mb-4 font-weight-bold text-size-2"><?= COMPANY_NAME ?></h2>
                 <span class="p-font-size">
                     <i class="fas fa-map-marker-alt icon-lg"></i>
-                    <?=ADDRESS_1?>
+                    <?=ADDRESS_4?>
                 </span>
                 <p></p>
                 <span class="p-font-size">

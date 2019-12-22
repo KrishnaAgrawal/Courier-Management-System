@@ -77,70 +77,87 @@ if (!empty($arrPost = $_POST)) {
             }
         </style>
         <script>
-
-            function checkBlank() {
-                location = $("#location").val();
-                if (location.length > 0 && location.length != 0) {
-//                    beforeSend: function(){
-                    // Show image container
-//                                $(".handle-spinner").show();
-//                               },
-                } else {
-                    $(".requiredFields").addClass("animation");
-                }
-            }
             /*
-             * hide table and details associated
+             * validate number
              */
-            function hideTable() {
-                $(".table-data-content").attr("hidden", "");
-
-            }
-
-            /*
-             * getAddressData()
-             */
-            function getFromAddressData(location) {
-                $("#location").val(trimTheInput(location));
-                $.ajax({
-                    url: "code/ajaxRequest.php?action=from",
-                    type: 'POST',
-//                    dataType: 'JSON',
-                    data: {from: location},
-                    beforeSend: function () {
-                        // Show image container
-//                        $(".handle-spinner").show();
-                    },
-                    success: function (result) {
-                        $("#location-box").show();
-                        $("#location-box").html(result);
-                        $("#location").css("background", "#FFF");
-                        if (result == "ERROR") {
-                        }
-                    },
-                    complete: function (result) {
-                        // Hide image container
-                        $(".handle-spinner").hide();
-                    },
-                    statusCode: {
-                        404: function () {
-                            alert("Something went wrong");
-                        }
+            function validateNumber(txt){
+                var res = '';
+                // check length of the number
+                if(txt.length == 10){
+                    // check the first digit of the number (6,7,8,9 only)
+                    mod=(Math.floor((txt/1000000000) % 10));
+                    if(mod < 6){
+                        //	print error message for invalid number
+                        res="Please enter a valid number.";
+                    $(".submmit").attr("disabled","");
+                    } else {
+                        $(".submmit").removeAttr("disabled");
                     }
-                });
+                } else if(txt.length == 0){
+                    res="";
+                    $(".submmit").removeAttr("disabled");
+                } else {
+                // print error message for invalid length
+                    res="Please enter a valid number.";
+                    $(".submmit").attr("disabled","");
+                }
+		$(".number-validation").html(res);
             }
-
-            function selectFrom(val) {
-                $("#location").val(val);
-                $("#location-box").hide();
-            }
-
+            
             /*
-             * trim function value
+             * validate email
              */
-            function trimTheInput(text) {
-                return text.replace(/ +(?= )/g, '');
+            function validateEmail(txt){
+                res="";
+                var re = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                if(re.test(txt) == false){
+                    res="Please enter a valid email.";
+                    $(".submmit").attr("disabled","");
+                }
+                else{
+                    res="";
+                    $(".submmit").removeAttr("disabled");
+                }
+                $(".email-validation").html(res);
+                return res;
             }
+            
+            /*
+             * validate name
+             */
+            function validateName(txt){
+                res="";
+                var re = /^([A-Za-z\.]{3,})$/;
+                if(re.test(txt) == false){
+                    res="Atleast 3 characters and only .(dot) is allowed in symbols.";
+                    $(".submmit").attr("disabled","");
+                }
+                else{
+                    res="";
+                    $(".submmit").removeAttr("disabled");
+                }
+                $(".name-validation").html(res);
+                return res;
+            }
+            
+            /*
+             * validate city
+             */
+            function validateCity(txt){
+                res="";
+                var re = /^([A-Za-z\.]{3,})$/;
+                if(re.test(txt) == false){
+                    res="Atleast 3 characters and only .(dot) is allowed in symbols.";
+                    $(".submmit").attr("disabled","");
+                }
+                else{
+                    res="";
+                    $(".submmit").removeAttr("disabled");
+                }
+                $(".city-validation").html(res);
+                return res;
+            }
+            
         </script>
     </head>
     <body class="bg-light" oncontextmenu="return false;">
@@ -188,27 +205,31 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputNamel4" class="font-weight-bold text-dark">Name<sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="name" id="inputNamel4" placeholder="Enter Name">
+                                                <input type="text" class="form-control" required="" onkeyup="validateName(this.value)" name="name" id="inputNamel4" placeholder="Enter Name">
+                                                <small class="text-danger name-validation"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4" class="font-weight-bold text-dark">Email<sup class="text-danger"></sup></label>
-                                                <input type="email" class="form-control" name="email" id="inputEmail4" placeholder="Enter Email">
+                                                <input type="email" class="form-control" onkeyup="validateEmail(this.value)" name="email" id="inputEmail4" placeholder="Enter Email">
+                                                <small class="text-danger email-validation"></small>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputNumber4" class="font-weight-bold text-dark">Number<sup class="text-danger">*</sup></label>
-                                                <input type="number" class="form-control" name="number" id="inputNumber4" placeholder="Enter Password">
+                                                <input type="number" class="form-control" required="" onkeyup="validateNumber(this.value)" name="number" id="inputNumber4" placeholder="Enter Password">
+                                                <small class="text-danger number-validation"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputCity4" class="font-weight-bold text-dark">City<sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="city" id="inputCity4" placeholder="Enter City">
+                                                <input type="text" class="form-control" required="" onkeyup="validateCity(this.value)" name="city" id="inputCity4" placeholder="Enter City">
+                                                <small class="text-danger city-validation"></small>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputNumber4" class="font-weight-bold text-dark">You Are<sup class="text-danger">*</sup></label>
-                                                <select class="form-control" id="exampleFormControlSelect1" name="you-are">
+                                                <select class="form-control" required="" id="exampleFormControlSelect1" name="you-are">
                                                     <option value="">Select</option>
                                                     <option value="You Sent The Shipment">You Sent The Shipment</option>
                                                     <option value="You Are A Reciever">You Are A Reciever</option>
@@ -217,18 +238,18 @@ if (!empty($arrPost = $_POST)) {
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputSubject4" class="font-weight-bold text-dark">Subject<sup class="text-danger">*</sup></label>
-                                                <input type="text" class="form-control" name="subject" id="inputSubject4" placeholder="Enter Subject">
+                                                <input type="text" class="form-control" required="" name="subject" id="inputSubject4" placeholder="Enter Subject">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1" class="font-weight-bold text-dark">Description<sup class="text-danger">*</sup></label>
                                             <textarea class="form-control" 
-                                                      id="exampleFormControlTextarea1" name="textarea" rows="3" placeholder="Enter Description"></textarea>
+                                                      id="exampleFormControlTextarea1" required="" name="textarea" rows="3" placeholder="Enter Description"></textarea>
                                         </div>
                                         <!--<i class="requiredFields"><sup class="text-danger font-weight-bold">*</sup>Indicates required fields.</i>-->
                                         <!--<br />-->
-                                        <input type="submit" name="call-us" onclick="hideTable();" class="btn btn-success mb-2" value="Save" />
-                                        <input type="reset" onclick="hideTable()" class="btn btn-success mb-2" value="Reset" />
+                                        <input type="submit" name="call-us" class="btn btn-success mb-2 submmit" value="Save" />
+                                        <input type="reset" class="btn btn-success mb-2" value="Reset" />
                                     </form>
                                     <?php
                                     include_once './goToTop.php';

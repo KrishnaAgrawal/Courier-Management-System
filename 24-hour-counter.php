@@ -169,7 +169,7 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="col">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                    <div class="year-box pull-left btn btn-sm">Location: </div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-3">
                                                     <span class="font-weight-bold "><u>VARANASI</u></span> <br />
@@ -177,7 +177,7 @@ if (!empty($arrPost = $_POST)) {
                                             </div>
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                    <div class="year-box pull-left btn btn-sm">Address:&nbsp;</div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-4">
                                                     <?= ADDRESS_2 ?>
@@ -187,7 +187,7 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="col">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                    <div class="year-box pull-left btn btn-sm">Location: </div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-3">
                                                     <span class="font-weight-bold "><u>GORAKHPUR</u></span> <br />
@@ -195,7 +195,7 @@ if (!empty($arrPost = $_POST)) {
                                             </div>
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                    <div class="year-box pull-left btn btn-sm">Address:&nbsp;</div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-4">
                                                     <?= ADDRESS_1 ?>
@@ -207,7 +207,7 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="col">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                    <div class="year-box pull-left btn btn-sm">Location: </div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-3">
                                                     <span class="font-weight-bold "><u>LUCKNOW</u></span> <br />
@@ -215,7 +215,7 @@ if (!empty($arrPost = $_POST)) {
                                             </div>
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                    <div class="year-box pull-left btn btn-sm">Address:&nbsp;</div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-4">
                                                     <?= ADDRESS_3 ?>
@@ -225,15 +225,15 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="col">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Location: </div>
+                                                    <div class="year-box pull-left btn btn-sm">Location: </div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-3">
-                                                    <span class="font-weight-bold "><u>KAURIRAM - GORAKHPUR</u></span> <br />
+                                                    <span class="font-weight-bold "><u>SAHAJANWA - GORAKHPUR</u></span> <br />
                                                 </div>
                                             </div>
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <div class="year-box pull-left bg-green btn btn-sm">Address:&nbsp;</div>
+                                                    <div class="year-box pull-left btn btn-sm">Address:&nbsp;</div>
                                                 </div>
                                                 <div class="media-body ml-2 mb-4">
                                                     <?= ADDRESS_4 ?>
