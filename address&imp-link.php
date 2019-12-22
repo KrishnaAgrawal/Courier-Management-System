@@ -1,6 +1,6 @@
 
 <!--Address and Important Links-->
-<div class="row conclusion-div-bg-color bg-light mt-3">
+<div class="container conclusion-div-bg-color bg-light mt-3">
     <div class="container">
         <div class="row conclusion-color my-4">
             <!--<div class="col-12">-->
@@ -8,16 +8,12 @@
                 <h2 class="text-uppercase mb-4 font-weight-bold text-size-2"><?= COMPANY_NAME ?></h2>
                 <span class="p-font-size">
                     <i class="fas fa-map-marker-alt icon-lg"></i>
-                    HN-20/21, RJ,<br />
-                    Nilkanthpuram Colony,<br />
-                    Paharia, Sarnarth, Varanasi<br /> 
-                    Varanasi - 221007
+                    <?=ADDRESS_1?>
                 </span>
                 <p></p>
                 <span class="p-font-size">
                     <a class="a-hover" href="<?= HOME ?>">
-                        <i class="fas fa-envelope icon-lg"></i>
-                        <?= EMAIL ?>
+                        <i class="fas fa-envelope icon-lg"></i> <?= EMAIL ?>
                     </a>
                 </span>
                 <p></p>

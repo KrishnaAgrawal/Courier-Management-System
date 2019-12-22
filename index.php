@@ -78,8 +78,8 @@
                             </a>
                     </div>
                 </div>
-                <?php include_once './address&imp-link.php'; ?>
             </div>
+                <?php include_once './address&imp-link.php'; ?>
             
         </div>
     </body>

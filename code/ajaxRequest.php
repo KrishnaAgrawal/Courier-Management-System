@@ -7,6 +7,7 @@ if (!empty($_GET['action'])) {
 if (!empty($_POST)) {
     $arrPost = $_POST;
 }
+//echo '<pre>';print_r($arrPost);exit;
 switch ($action) {
     case "timeAndPrice" : getTimeAndPrice($arrPost);
         break;
@@ -16,6 +17,9 @@ switch ($action) {
         break;
     case "locationFinder" : getResultAddressOfGivenLoaction($arrPost);
         break;
+    case "write-to-us" : submitFormWriteToUs($arrPost);
+        break;
+    
 //    default : echo 111;exit;
 }
 
@@ -226,7 +230,7 @@ function getResultAddressOfGivenLoaction($arrPost){
                 $arrDistrictName[] = $rows['txt_district_name'];
                 $arrPinCode[] = $rows['int_pincode'];
             }
-            $queryLocation = "SELECT tbl_address.txt_district_name, tbl_address.txt_state_name, tbl_address.txt_number, tbl_pin_district.txt_sub_office, "
+            $queryLocation = "SELECT tbl_address.txt_district_name, tbl_address.txt_state_name, tbl_pin_district.txt_number, tbl_pin_district.txt_sub_office, "
                     . "tbl_pin_district.txt_head_office, tbl_pin_district.ysn_delivery, tbl_pin_district.ysn_pickup, tbl_pin_district.int_pincode "
                     . " FROM tbl_address, tbl_pin_district WHERE "
                     . "tbl_pin_district.txt_district_name = tbl_address.txt_district_name AND "
@@ -234,10 +238,34 @@ function getResultAddressOfGivenLoaction($arrPost){
                     . "tbl_pin_district.int_pincode IN ("."'" . str_replace(",", "','", implode(',',$arrPinCode)) . "'".") "
                     . "ORDER BY tbl_pin_district.int_pincode";
             $utilities = new Utilities();
-//            echo '<pre>';print_r($rows);exit;
+//            echo '<pre>';print_r($queryLocation);exit;
             $result = $utilities->selectQuery($queryLocation);
             return $result;
         }
         
+    }
+}
+
+/*
+ * submit form write to us
+ */
+function submitFormWriteToUs($arrPost){ 
+    if(!empty($name = $arrPost['name']) && 
+        !empty($number = $arrPost['number']) && 
+        !empty($city = $arrPost['city']) &&
+        !empty($youAre = $arrPost['you-are']) && 
+        !empty($subject = $arrPost['subject']) && 
+        !empty($textarea = $arrPost['textarea'])){
+        $email = (!empty($arrPost['email'])?$arrPost['email']:"");
+        $query = "INSERT INTO tbl_feedback(txt_name, txt_email, txt_number, txt_city, txt_cutomer, txt_subject, txt_description) "
+                . "VALUES(\"$name\", \"$email\", \"$number\", \"$city\", \"$youAre\", \"$subject\", \"$textarea\" )";
+        include_once './Utilities.php';
+        $utilities = new Utilities();
+//    echo '<pre>';print_r($query);exit;
+        if($utilities->executeQuery($query)){
+            echo '<script>window.location.href="../write-us.php?q=save&n='.$name.'#top";</script>';
+        } else {
+            echo '<script>window.location.href="../write-us.php?q=error#top";</script>';
+        }
     }
 }

@@ -1,16 +1,18 @@
-<div class="row top-bar bg-light">
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-l-pad" id="mainlogo"> 
-        <h1><a href="" class="font-weight-bold a-hover"><?=COMPANY_NAME?></a> </h1>
-    </div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 top-menu">
-        <ul class="float-right navbar-right mt-2">
-            <li class="line-ht style"><a href="<?=MOBILE_LINK?>" class="a-hover"><i class="fa fa-phone-alt"></i> <?=MOBILE?></a></li>
-            <li class="signup-btn style ml-4 mr-2">
-                <a class="a-hover" href="admin/login.php">
-                    <img src="img/user.gif" class="user"> Login
-                </a>
-            </li>
-        </ul>
+<div class="container-fluid">
+    <div class="row top-bar bg-light">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-l-pad" id="mainlogo"> 
+            <h1><a href="" class="font-weight-bold a-hover"><?=COMPANY_NAME?></a> </h1>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 top-menu">
+            <ul class="float-right navbar-right mt-2">
+                <li class="line-ht style"><a href="<?=MOBILE_LINK?>" class="a-hover"><i class="fa fa-phone-alt"></i> <?=MOBILE?></a></li>
+                <li class="signup-btn style ml-4 mr-2">
+                    <a class="a-hover" href="admin/login.php">
+                        <img src="img/user.gif" class="user"> Login
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item menu">
-                <a class="nav-link active" aria-disabled="true" href="index.php">Home <span class="sr-only"></span></a>
+                <a class="nav-link" aria-disabled="true" href="index.php">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item dropdown menu">
                 <a class="nav-link dropdown-toggle" aria-disabled="true" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,12 +52,12 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="call-us.php">Call Us</a>
-                    <a class="dropdown-item" href="#">Write To Us</a>
-                    <a class="dropdown-item" href="#">24 Hours Counters</a>
+                    <a class="dropdown-item" href="write-us.php">Write To Us</a>
+                    <a class="dropdown-item" href="24-hour-counter.php">24 Hours Counters</a>
                 </div>
             </li>
             <li class="nav-item menu">
-                <a class="nav-link" aria-disabled="true" href="#">Careers</a>
+                <a class="nav-link" aria-disabled="true" href="career.php">Careers</a>
             </li>
         </ul>
     </div>
