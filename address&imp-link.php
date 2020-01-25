@@ -12,7 +12,7 @@
                 </span>
                 <p></p>
                 <span class="p-font-size">
-                    <a class="a-hover" href="<?= HOME ?>">
+                    <a class="a-hover" href="index.php">
                         <i class="fas fa-envelope icon-lg"></i> <?= EMAIL ?>
                     </a>
                 </span>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-4 text-center">
                 <h5 class="text-dark font-weight-bold">Quick Links</h5>
-                <a href="admin/login.php" title="Admin" class="a-hover" ><div class="mt-3">Log in</div></a>
+                <a href="login.php" title="Admin" class="a-hover" ><div class="mt-3">Log in</div></a>
                 <a href="<?= SIZE_GUIDE ?>" title="Size Guide" class="a-hover" ><div class="mt-3">Dangerous Goods</div></a>
                 <a href="<?= SIZE_GUIDE ?>" title="Size Guide" class="a-hover" ><div class="mt-3">Banned Commodities</div></a>
                 

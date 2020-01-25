@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row top-bar bg-light">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-l-pad" id="mainlogo"> 
-            <h1><a href="" class="font-weight-bold a-hover"><?=COMPANY_NAME?></a> </h1>
+            <h1><a href="" class="font-weight-bold a-hover h1-font-size"><?=COMPANY_NAME?></a> </h1>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 top-menu">
             <ul class="float-right navbar-right mt-2">
                 <li class="line-ht style"><a href="<?=MOBILE_LINK?>" class="a-hover"><i class="fa fa-phone-alt"></i> <?=MOBILE?></a></li>
                 <li class="signup-btn style ml-4 mr-2">
-                    <a class="a-hover" href="admin/login.php">
+                    <a class="a-hover" href="login.php">
                         <img src="img/user.gif" class="user"> Login
                     </a>
                 </li>

@@ -7,7 +7,18 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <?php
 //        include_once './favicon.php';
+        session_start();
+        if(!empty($_SESSION['name'] && $_SESSION['number'] && $_SESSION['email']) && $_SESSION['user_type']){
+            if($_SESSION['user_type'] == 1){
+                //  Go to admin dashboard
+                echo "<script>window.location.href='./admin/index.php';</script>";
+            } else if($_SESSION['user_type'] == 2){
+                //  Go to user dashboard
+                echo "<script>window.location.href='./user/index.php';</script>";
+            }
+        }
         ?>
+        <link href="img/lg.jpg" rel="icon" type="favicon" />
         <script src="https://kit.fontawesome.com/5249859935.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

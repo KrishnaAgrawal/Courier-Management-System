@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Admin Login </title>
+        <title>Registration </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href='https://fonts.googleapis.com/css?family=Exo:400,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -112,37 +112,41 @@
         if (!empty($_GET['q'])) {
             $errorDetail = "";
             $err = $_GET['q'];
-            if ($err == 3) {
-                $errorDetail = "Enter correct credentials.";
-            } else if ($err == 2) {
-                $errorDetail = "Something went wrong.";
-            } else if ($err == 1) {
-                $errorDetail = "Something went wrong, Please login again.";
-            } else if ($err == "verify") {
-                $verify = 1;
+            if ($err == "err") {
+                $errorDetail = "Enter valid details. Do not use ' anywhere.";
+            } else if ($err == "saved") {
+                $errorDetail = "Registration successfull.";
+            } else if ($err == "nopswdmtch") {
+                $errorDetail = "Password do not matched.";
+            } else if ($err == "invalidCaptcha") {
+                $errorDetail = "Wrong Captcha.";
+            } else if ($err == "emailExists"){
+                $errorDetail = "Email already registered with us. Please try to login.";
+            } else if ($err == "numberExists"){
+                $errorDetail = "Number already registered with us. Please try to login.";
             }
         }
         ?>
         <div class="container-fluid" >
             <div class="row">
                 <div class="wrapper d-flex align-items-center justify-content-center flex-lg-row">
+                    <div class="demo col-xs-12 col-sm-12 col-md-9 col-lg-9"> 
                     <?php
-                    if (!empty($errorDetail)) {
-                        ?>
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <?= $errorDetail ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        if (!empty($errorDetail)) {
+                            ?>
+                            <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                                <?= $errorDetail ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                     <?php } ?>
-                    <div class="demo col-xs-12 col-sm-12 col-md-9 col-lg-9 my-5">
                         <a href="<?= HOME ?>" title="Go to <?= HOME ?>" style="text-decoration: none;">
                             <h3 class="mt-5 mx-5 text-white text-center"> <?= COMPANY_NAME ?> | Registration </h3>
                         </a>
                         <br />
                         <div class="col">
-                            <form action="code/verifyLogin.php" method="post" class="">
+                            <form action="code/registerationCode.php" method="post" class="">
                                 <div class="form-row mb-2">
                                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                         <label>Name<span class="text-danger font-weight-bold">*</span></label>
@@ -210,25 +214,30 @@
                                                placeholder="Enter captcha*" required="true" />
                                         <small id="nameHelp" class="captcha-validation form-text text-danger text-left"> </small>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
                                         <img class="mt-4 mg-fluid" src="captcha.php" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-row justify-content-center">
                                     <input type="submit" 
-                                           class="submit form-control mb-5  ml-3 text-secondary font-weight-bold col-3 float-right" 
-                                           name="submit" value="Login"  />
+                                           class="submit form-control mb-1 btn-secondary font-weight-bold col-2" 
+                                           name="register" value="Register"  />
                                     <input type="reset" 
-                                           class="reset form-control mb-5 text-secondary font-weight-bold col-3 float-right" 
+                                           class="reset form-control mb-1 ml-5 btn-secondary font-weight-bold col-2" 
                                            value="Reset"  />
+                                </div>
+                                <div class="form-row justify-content-center my-2">
+                                    <span class="text-white border-3">Already have an account? 
+                                        <a href="login.php" class="text-info font-weight-bold text-decoration-none">Login</a>
+                                    </span>
                                 </div>
                             </form>
                         </div>
-                        <hr class="mt-5" />
+<!--                        <hr class="mt-5" />
                         <div class="col ml-5 mb-3 text-center">
                             <span class="text-secondary border-3">Already have an account? 
                                 <a href="login.php" class="text-info text-decoration-none">Login</a> </span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

@@ -38,7 +38,11 @@ function getTimeAndPrice($arrPost) {
         $to = getLatLong($to);
         $distance = getDistanceBetweenFromAndTo($from, $to);
         $calculatedPriceDate = calculatePriceDate($distance, $weight, $bookingDate);
-        echo json_encode($calculatedPriceDate);
+        if(!empty($arrPost['directCall'])){
+            return ($calculatedPriceDate);
+        } else {
+            echo json_encode($calculatedPriceDate);
+        }
     } else {
         echo "ERROR";
     }
@@ -97,7 +101,7 @@ function calculatePriceDate($distance, $weight, $bookingDate) {
     }
     $documentPrice = $baseDocumentPrice + $weight * 200 + $distance;
     $airPrice = $baseAirPrice + $weight * 150 + $distance;
-    $groundPrice = $baseGroundPrice + $weight * 20 + $distance;
+    $groundPrice = $baseGroundPrice + $weight * 20 + $distance/8;
     return [
         'documentPrice' => ceil($documentPrice),
         'airPrice' => ceil($airPrice),
@@ -257,7 +261,7 @@ function submitFormWriteToUs($arrPost){
         !empty($subject = $arrPost['subject']) && 
         !empty($textarea = $arrPost['textarea'])){
         $email = (!empty($arrPost['email'])?$arrPost['email']:"");
-        $query = "INSERT INTO tbl_feedback(txt_name, txt_email, txt_number, txt_city, txt_cutomer, txt_subject, txt_description) "
+        $query = "INSERT INTO tbl_contact(txt_name, txt_email, txt_number, txt_city, txt_cutomer, txt_subject, txt_description) "
                 . "VALUES(\"$name\", \"$email\", \"$number\", \"$city\", \"$youAre\", \"$subject\", \"$textarea\" )";
         include_once './Utilities.php';
         $utilities = new Utilities();

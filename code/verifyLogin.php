@@ -6,11 +6,11 @@ if(!empty($_POST['username']) && !empty($_POST['password'])){
         $utilities = new Utilities();
         $encryptedPassword = $utilities->encrypt($password);
 //        echo $encryptedPassword;exit;
-        $query = "SELECT txt_name, txt_email, txt_number FROM tbl_login WHERE "
-                . " txt_email=\"$username\" AND txt_password=\"$encryptedPassword\" AND ysn_deleted = 0";
+        $query = "SELECT txt_name, txt_email, txt_number, ysn_user_type FROM tbl_login WHERE "
+                . " txt_email=\"$username\" AND txt_password=\"$encryptedPassword\" AND ysn_deleted = 0 AND ysn_active = 1";
         if(is_numeric($username) && strlen($username) == 10){
-            $query = "SELECT txt_name, txt_email, txt_number FROM tbl_login WHERE "
-                    . " txt_number=\"$username\" AND txt_password=\"$encryptedPassword\" AND ysn_deleted = 0";
+            $query = "SELECT txt_name, txt_email, txt_number, ysn_user_type FROM tbl_login WHERE "
+                    . " txt_number=\"$username\" AND txt_password=\"$encryptedPassword\" AND ysn_deleted = 0 AND ysn_active = 1";
         }
 //        echo $query;exit;
         
@@ -22,21 +22,27 @@ if(!empty($_POST['username']) && !empty($_POST['password'])){
                     $_SESSION['name'] = $rows['txt_name'];
                     $_SESSION['number'] = $rows['txt_number'];
                     $_SESSION['email'] = $rows['txt_email'];
-                    //  Go to admin dashboard
-                    echo "<script>window.location.href='../admin/index.php';</script>";
+                    $_SESSION['user_type'] = $rows['ysn_user_type'];
+                    if($rows['ysn_user_type'] == 1){
+                        //  Go to admin dashboard
+                        echo "<script>window.location.href='../admin/index.php';</script>";
+                    } else if($rows['ysn_user_type'] == 2){
+                        //  Go to user dashboard
+                        echo "<script>window.location.href='../user/index.php';</script>";
+                    }
                 } else {
                     //  Something went wrong
-                    echo "<script>window.location.href='../admin/login.php?q=2';</script>";
+                    echo "<script>window.location.href='../login.php?q=2';</script>";
                 }
             } else {
                 //  Enter correct credentials
-                echo "<script>window.location.href='../admin/login.php?q=3';</script>";
+                echo "<script>window.location.href='../login.php?q=3';</script>";
             }
         } else {
             //  Something went wrong
-            echo "<script>window.location.href='../admin/login.php?q=2';</script>";
+            echo "<script>window.location.href='../login.php?q=2';</script>";
         }
     } else {
         //  Enter correct credentials
-        echo "<script>window.location.href='../admin/login.php?q=3';</script>";
+        echo "<script>window.location.href='../login.php?q=3';</script>";
     }

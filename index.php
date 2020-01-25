@@ -9,6 +9,39 @@
         <?php include_once './linksAndScripts.php'; ?>
         <link href="css/index.css" rel="stylesheet" type="text/css"/>
         <style>
+            @media (max-width: 330px) {  
+                .h1-font-size, .phone-font-size {font-size: 5vw;} /*1rem = 16px*/
+                .h2-font-size {font-size: 3vw;} /*1rem = 16px*/
+            }
+            /*@media (min-width: 220px) {  
+                .h1-font-size {font-size:1rem;} 1rem = 16px
+            }*/
+            @media (min-width: 330px) {  
+                .h1-font-size {font-size:1.5rem;}   
+                .h2-font-size {font-size:1rem;}  
+            }
+            @media (min-width: 544px) {  
+                .h1-font-size {font-size:1.5rem;}   
+                .h2-font-size {font-size:1rem;}  
+            }
+
+            /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+            @media (min-width: 768px) {  
+                .h1-font-size {font-size:2rem;}  
+                .h2-font-size {font-size:1.5rem;}  
+            }
+
+            /* Large devices (desktops, 992px and up) */
+            @media (min-width: 992px) { 
+                .h1-font-size {font-size:2.5rem;}   
+                .h2-font-size {font-size:1.5rem;}  
+            }
+
+            /* Extra large devices (large desktops, 1200px and up) */
+            @media (min-width: 1200px) {  
+                .h1-font-size {font-size:2.5rem;}    
+                .h2-font-size {font-size:2rem;}    
+            }
 
         </style>
     </head>
@@ -20,7 +53,11 @@
         </style>
         </noscript>
         <div class="container-fluid">
-            <?php include_once './header.php';?>
+            <?php 
+            include_once './header.php';
+            include_once './code/Utilities.php';
+            include_once './calc-user-hits.php';
+            ?>
             <div class="container-fluid">
                 <div class="carouselSize">
                 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
