@@ -2,7 +2,7 @@
     <div class="container-fluid bg-white">
         <div class="row top-bar">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-l-pad" id="mainlogo"> 
-                <h1><a href="<?=(!empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '')?>" class="font-weight-bold a-hover h1-font-size"><?= COMPANY_NAME ?></a> </h1>
+                <h1><a href="index.php" class="font-weight-bold a-hover h1-font-size"><?= COMPANY_NAME ?></a> </h1>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 top-menu">
                 <ul class="float-right navbar-right mt-2">
@@ -43,7 +43,7 @@
                             Services 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Track Courier</a>
+                            <a class="dropdown-item" href="../track-courier.php">Track Courier</a>
                             <a class="dropdown-item" href="../location-finder.php">Location Finder</a>
                             <a class="dropdown-item" href="../find-time&price.php">Find Time & Price</a>
                         </div>

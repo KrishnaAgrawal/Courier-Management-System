@@ -4,13 +4,11 @@ if (empty($_SESSION) || empty($_SESSION['name']) || empty($_SESSION['number']) |
     session_destroy();
     echo "<script>window.location.href='../login.php';</script>";
 }
-?>
-<!DOCTYPE html>
-<?php
 include_once '.././constants.php';
 $adminType = 1;
 $adminType = ($adminType == 2 ? "hidden" : "");
 ?>
+<!DOCTYPE html>
 <html>
     <head>
 
@@ -346,7 +344,8 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             $('#recipientAddressLine1').val(data.txt_recipient_address_line1);
                             $('#destination').val(data.txt_destination);
                             $('#dateBooked').val(data.dat_booked);
-                            $('#txt_service_type').val(data.txt_transport_mode);
+                            $('#serviceType').val(data.txt_transport_mode);
+                            $('#courierStatus').val(data.txt_courier_status);
                             $('#updateCourierPackage').modal('show');
                         }
                     });
@@ -382,6 +381,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             $('.destination').val(data.txt_destination);
                             $('.dateBooked').val(data.dat_booked);
                             $('.txt_service_type').val(data.txt_transport_mode);
+                            $('.courierStatus').val(data.txt_courier_status);
                             $('#viewCourierPackage').modal('show');
                         }
                     });
@@ -511,7 +511,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                 <th>Date Booked</th>
                                 <th>Price</th>
                                 <th>Delivery Date</th>
-                                <th <?= $adminType ?>>Action</th>
+                                <th <?= $adminType ?> style="width: 100px;">Action</th>
                             </tr>
                             <?php
                             while ($rows = $result->fetch_array()) {
@@ -568,7 +568,6 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                             title="View">
                                             <span class="fas fa-eye"></span>
                                         </a>
-                                        &nbsp;
                                         <a 
                                             class="text-dark data-edit" 
                                             onclick="getBookedCourierData()"
@@ -577,12 +576,18 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                             title="Modify">
                                             <span class="fas fa-edit"></span>
                                         </a>
-                                        &nbsp;
                                         <a onclick="deleteBookedCourierData(<?= $rows['0'] ?>)" 
                                            class="text-dark data-delete" 
                                            style="cursor: pointer;"
                                            title="Delete">
                                             <span class="fas fa-trash"></span>
+                                        </a>
+                                        <a href="track-courier.php?txt_tracking_id=<?=$rows['txt_tracking_id']?>"
+                                           target="_blank"
+                                           class="text-dark data-delete" 
+                                           style="cursor: pointer;"
+                                           title="Download">
+                                            <span class="fas fa-file-download"></span>
                                         </a>
                                         <!--<i class="fa fa-check-circle text-success" title="approved"></i>-->
                                     </td>
@@ -767,6 +772,19 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                        onclick="hideTable()" value="<?php echo date('Y-m-d'); ?>"
                                        name="bookingDate" id="bookingDate"
                                        placeholder="DD-MM-YYYY" onfocus="(this.type = 'date')" required="">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <label for="txt_courier_status" class="col-form-label font-weight-bold">Courier Status<sup class="text-danger">*</sup>: </label>
+                            <div class="">
+                                <select disabled="" class="form-control txt_courier_status" 
+                                        id="txt_service_type" name="txt_courier_status" required="">
+                                    <option value="Picked Up">Picked Up</option>
+                                    <option value="Courier in transit">Courier in transit</option>
+                                    <option value="Nearest hub near recipient">Nearest hub near recipient</option>
+                                    <option value="Out for delivery">Out for delivery</option>
+                                    <option value="Delivered">Delivered</option>
+                                </select>
                             </div>
                         </div>
                         <!--                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -987,6 +1005,20 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                        placeholder="DD-MM-YYYY" onfocus="(this.type = 'date')" required="">
                             </div>
                         </div>
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <label for="courierStatus" class="col-form-label font-weight-bold">Courier Status<sup class="text-danger">*</sup>: </label>
+                            <div class="">
+                                <select class="form-control courierStatus" 
+                                        id="courierStatus" name="courierStatus" required="">
+                                    <option value="">Select Courier Status</option>
+                                    <option value="Picked Up">Picked Up</option>
+                                    <option value="Courier in transit">Courier in transit</option>
+                                    <option value="Nearest hub near recipient">Nearest hub near recipient</option>
+                                    <option value="Out for delivery">Out for delivery</option>
+                                    <option value="Delivered">Delivered</option>
+                                </select>
+                            </div>
+                        </div>
                         <!--                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                                                     <label for="validatedCustomFile" class="col-form-label font-weight-bold">Upload Image: </label>
                                                     <div class="custom-file">
@@ -995,9 +1027,9 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                                     </div>
                                                 </div>-->
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <label for="txt_service_type" class="col-form-label font-weight-bold">Recipient's Address:<sup class="text-danger">*</sup>: </label>
+                            <label for="txt_service_type" class="col-form-label font-weight-bold">Service<sup class="text-danger">*</sup>: </label>
                             <div class="">
-                                <select class="form-control txt_service_type" id="txt_service_type" name="txt_service_type" required="">
+                                <select class="form-control txt_service_type" id="serviceType" name="txt_service_type" required="">
                                     <option value="">Service Type</option>
                                     <option value="Air">Air</option>
                                     <option value="Document">Document</option>
@@ -1153,6 +1185,19 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                        placeholder="DD-MM-YYYY" onfocus="(this.type = 'date')" required="">
                             </div>
                         </div>
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                            <label for="courierStatus" class="col-form-label font-weight-bold">Courier Status<sup class="text-danger">*</sup>: </label>
+                            <div class="">
+                                <select disabled="" class="form-control courierStatus" 
+                                        id="courierStatus" name="courierStatus" required="">
+                                    <option value="Picked Up">Picked Up</option>
+                                    <option value="Courier in transit">Courier in transit</option>
+                                    <option value="Nearest hub near recipient">Nearest hub near recipient</option>
+                                    <option value="Out for delivery">Out for delivery</option>
+                                    <option value="Delivered">Delivered</option>
+                                </select>
+                            </div>
+                        </div>
                         <!--                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                                                     <label for="validatedCustomFile" class="col-form-label font-weight-bold">Upload Image: </label>
                                                     <div class="custom-file">
@@ -1161,7 +1206,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                                     </div>
                                                 </div>-->
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <label for="txt_service_type" class="col-form-label font-weight-bold">Recipient's Address:<sup class="text-danger">*</sup>: </label>
+                            <label for="txt_service_type" class="col-form-label font-weight-bold">Service<sup class="text-danger">*</sup>: </label>
                             <div class="">
                                 <select class="form-control txt_service_type" readonly="" disabled="" id="txt_service_type" name="txt_service_type" required="">
                                     <option value="">Service Type</option>

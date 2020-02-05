@@ -381,9 +381,9 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                         if (!empty($resCourierPackage) && $resCourierPackage->num_rows > 0) {
                                             while ($rows = $resCourierPackage->fetch_array()) {
                                                 $txtColorGreen = "badge-danger";
-                                                $txtTitle = "Not Approved";
+                                                $txtTitle = "Not Reviewed";
                                                 if ($rows['ysn_approved'] == 1) {
-                                                    $txtTitle = "Approved";
+                                                    $txtTitle = "Reviewed";
                                                     $txtColorGreen = "badge-success";
                                                 }
                                                 ?>

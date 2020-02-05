@@ -1,4 +1,11 @@
 <?php
+
+// Include autoloader 
+require_once '../../dompdf/autoload.inc.php'; 
+
+// Reference the Dompdf namespace 
+use Dompdf\Dompdf; 
+
 $action = "";
 $arrPost = [];
 if (!empty($_GET['action'])) {
@@ -71,6 +78,7 @@ function bookCourierPackage($arrPost){
                 !empty($to = $arrPost['to']) && 
                 !empty($bookingDate = $arrPost['bookingDate']) 
             ){
+            $courierStatus = "Picked Up";
             $senderEmail = (!empty($arrPost['txt_sender_email']) ? $arrPost['txt_sender_email'] : '');
             $senderAddressLine1 = (!empty($arrPost['txt_sender_address_line1']) ? $arrPost['txt_sender_address_line1'] : '');
             $courierItemPieces = (!empty($arrPost['txt_courier_item_pieces']) ? $arrPost['txt_courier_item_pieces'] : '');
@@ -87,12 +95,12 @@ function bookCourierPackage($arrPost){
                     . "txt_sender_email, txt_sender_address_line1, txt_courier_item_content, int_courier_item_pieces, "
                     . "txt_weight, txt_origin, txt_recipient_name, txt_recipient_mobile, txt_recipient_alternate_mobile, "
                     . "txt_recipient_email, txt_recipient_address_line1, txt_destination, dat_booked, txt_transport_mode, "
-                    . "txt_price, dat_expected_delivery, dat_created, txt_created_by)"
+                    . "txt_price, txt_courier_status, dat_expected_delivery, dat_created, txt_created_by, ysn_approved)"
                     . " VALUES (\"$trackingId\", \"$senderName\", \"$senderNumber\", \"$senderEmail\", \"$senderAddressLine1\", "
                     . " \"$courierItem\", \"$courierItemPieces\", \"$courierWeight\", \"$from\", \"$recipientName\", "
                     . " \"$recipientNumber\", \"$recipientAlternativeNumber\", \"$recipientEmail\", "
                     . " \"$recipientAddressLine1\", \"$to\", \"$bookingDate\", \"$service\", "
-                    . " \"$price\", \"$deliveryDate\", \"$dateCreated\", \"$createdBy\")";
+                    . " \"$price\", \"$courierStatus\", \"$deliveryDate\", \"$dateCreated\", \"$createdBy\", 1)";
             include_once '../../code/Utilities.php';
             $utilities = new Utilities();
             if($utilities->executeQuery($query)){
@@ -114,7 +122,7 @@ function bookCourierPackage($arrPost){
 function getBookedCourierData($arrPost){
     if(!empty($courierId = $arrPost['courierId'])){
         include_once '../../code/Utilities.php';
-        $query = "SELECT int_courier_booking_id, txt_sender_name, txt_sender_mobile, "
+        $query = "SELECT int_courier_booking_id, txt_sender_name, txt_sender_mobile, txt_courier_status, "
                 . "txt_sender_email, txt_sender_address_line1, txt_courier_item_content, int_courier_item_pieces, "
                 . "txt_weight, txt_origin, txt_recipient_name, txt_recipient_mobile, txt_recipient_alternate_mobile, "
                 . "txt_recipient_email, txt_recipient_address_line1, txt_destination, dat_booked, txt_transport_mode "
@@ -148,6 +156,7 @@ function updateCourierPackage($arrPost){
             !empty($recipientAddressLine1 = $arrPost['txt_recipient_address_line1']) && 
             !empty($to = $arrPost['to']) && 
             !empty($bookingDate = $arrPost['bookingDate']) && 
+            !empty($courierStatus = $arrPost['courierStatus']) && 
             !empty($serviceType = $arrPost['txt_service_type'])
         ){
             $service = '';
@@ -193,7 +202,8 @@ function updateCourierPackage($arrPost){
                 . "txt_recipient_email = \"$recipientEmail\", txt_recipient_address_line1 = \"$recipientAddressLine1\", "
                 . "txt_destination = \"$to\", dat_booked = \"$bookingDate\", txt_transport_mode = \"$service\", "
                 . "txt_price = \"$price\", dat_expected_delivery = \"$deliveryDate\", dat_modified = \"$dateModified\", "
-                . " txt_modified_by = \"$modifiedBy\" "
+                . "txt_modified_by = \"$modifiedBy\", ysn_approved = 1, "
+                . "txt_courier_status = \"$courierStatus\" "
                 . "WHERE int_courier_booking_id = $courierBookingId";
         include_once '../../code/Utilities.php';
         $utilities = new Utilities();

@@ -213,7 +213,8 @@ include_once './constants.php';
         </style>
         </noscript>
         <div class="container-fluid">
-            <?php include_once './header.php'; ?>
+            <?php include_once './header.php'; 
+            include_once './calc-user-hits.php';?>
             <div class="bd-example">
                 <?php include_once './carousel.php'; ?>
                 <div class="row mt-3">

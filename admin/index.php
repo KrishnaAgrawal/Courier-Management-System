@@ -99,7 +99,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                 if(startDateHits < endDateHits){
                     $.ajax({
                         method: 'post',
-                        url: "ajaxRequests.php?action=getHits",
+                        url: "code/ajaxRequests.php?action=getHits",
                         data: {startDateHits: startDateHits, endDateHits: endDateHits},
                         success: function (response){
                             if($.isNumeric(response)){
@@ -123,7 +123,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                 if(startDateUsers < endDateUsers){
                     $.ajax({
                         method: 'post',
-                        url: "ajaxRequests.php?action=getUsers",
+                        url: "code/ajaxRequests.php?action=getUsers",
                         data: {startDateUsers: startDateUsers, endDateUsers: endDateUsers},
                         success: function (response){
                             if($.isNumeric(response)){
@@ -148,7 +148,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                 var customerCity =  $("#cust_city-"+custId).text();
                 var customerState =  $("#cust_state-"+custId).text();
                 $.ajax({
-                    url: "ajaxRequests.php?action=updateCustomerDetail",
+                    url: "code/ajaxRequests.php?action=updateCustomerDetail",
                     type: 'POST',
                     data: {custId: custId, customerNumber: customerNumber, customerName: customerName, customerEmail: customerEmail, customerAddress: customerAddress, customerCity: customerCity, customerState: customerState},
                     success: function(result){
@@ -176,7 +176,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                 var res = confirm("Are you sure to delete this item?");
                 if(res){
                     $.ajax({
-                       url: "ajaxRequests.php?action=deleteCustomerDetail",
+                       url: "code/ajaxRequests.php?action=deleteCustomerDetail",
                        type: 'POST',
                        data: {customerId: customerId},
                        success: function(result){
@@ -205,7 +205,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
             .container-fluid { display:none; }
         </style>
         </noscript>
-        <div class="container-fluid bg-white">
+        <div class="container-fluid bg-light">
             <?php
             include_once './adminHeader.php';
             include_once '../code/Utilities.php';
@@ -301,7 +301,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
             </div>
             <div class="col-sm-12 my-3" id="user">
                 <div class="separator">
-                    <h4 class="ask font-weight-bold fa-2x"> Customer Details </h4>
+                    <h4 class="ask font-weight-bold fa-2x"> Employee Details </h4>
                 </div>
             </div>
             <?php 

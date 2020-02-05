@@ -8,14 +8,17 @@
         <?php
 //        include_once './favicon.php';
         session_start();
-        if(!empty($_SESSION['name'] && $_SESSION['number'] && $_SESSION['email']) && $_SESSION['user_type']){
-            if($_SESSION['user_type'] == 1){
-                //  Go to admin dashboard
-                echo "<script>window.location.href='./admin/index.php';</script>";
-            } else if($_SESSION['user_type'] == 2){
-                //  Go to user dashboard
-                echo "<script>window.location.href='./user/index.php';</script>";
-            }
+        if(!empty($_SESSION['name']) && 
+            !empty($_SESSION['number']) && 
+            !empty($_SESSION['email']) && 
+            !empty($_SESSION['user_type'])){
+                if($_SESSION['user_type'] == 1){
+                    //  Go to admin dashboard
+                    echo "<script>window.location.href='./admin/index.php';</script>";
+                } else if($_SESSION['user_type'] == 2){
+                    //  Go to user dashboard
+                    echo "<script>window.location.href='./user/index.php';</script>";
+                }
         }
         ?>
         <link href="img/lg.jpg" rel="icon" type="favicon" />

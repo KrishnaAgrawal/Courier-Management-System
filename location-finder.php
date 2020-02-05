@@ -4,10 +4,11 @@ include_once './constants.php';
 $result = [];
 $location = '';
 if(!empty($arrPost = $_POST)){
-    if(!empty($arrPost['Find'])){
+    if(!empty($arrPost['Find']) && !empty($arrPost['location'])){
         $location = $arrPost['location'];
         include_once './code/ajaxRequest.php';
         include_once './code/Utilities.php';
+            include_once './calc-user-hits.php';
         $result = getResultAddressOfGivenLoaction($arrPost);
     }
 //    echo '<pre>';print_r($result);exit;

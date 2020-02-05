@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="container-fluid bg-white">
+    <div class="container-fluid bg-light">
         <div class="row top-bar">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-l-pad" id="mainlogo"> 
                 <h1><a href="" class="font-weight-bold a-hover h1-font-size"><?= COMPANY_NAME ?> | Admin</a> </h1>
@@ -15,7 +15,7 @@
                 </ul>
             </div>
         </div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--<a class="navbar-brand" href="#">Track</a>-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,7 @@
                             Services 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Track Courier</a>
+                            <a class="dropdown-item" href="../track-courier.php">Track Courier</a>
                             <a class="dropdown-item" href="../location-finder.php">Location Finder</a>
                             <a class="dropdown-item" href="../find-time&price.php">Find Time & Price</a>
                         </div>
@@ -45,21 +45,21 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="index.php#user">User</a>
-                            <a class="dropdown-item" href="manage-feedback.php">Feedback</a>
-                            <a class="dropdown-item" href="manage-review.php">Review</a>
-                            <a class="dropdown-item" href="manage-complaint.php">Complaint</a>
+                            <a class="dropdown-item" href="feedback.php">Feedback</a>
+                            <a class="dropdown-item" href="review.php">Review</a>
+                            <a class="dropdown-item" href="complaint.php">Complaint</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown menu">
+<!--                    <li class="nav-item dropdown menu">
                         <a class="nav-link dropdown-toggle" aria-disabled="true" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Approve 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="approve-user.php">User</a>
-                            <a class="dropdown-item" href="approve-courier-package.php">Courier Package</a>
+                            <a class="dropdown-item" href="courier-package.php?approved=no&page=1">Courier Package</a>
                             <a class="dropdown-item" href="approve-review.php">Review</a>
                         </div>
-                    </li>
+                    </li>-->
                     <li class="nav-item dropdown menu">
                         <a class="nav-link dropdown-toggle" aria-disabled="true" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Settings 
