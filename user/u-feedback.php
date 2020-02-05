@@ -22,6 +22,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
         <script src="../js/jquery-3.2.1.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/u-courier-package.js" type="text/javascript"></script>
         <link href="../img/lg.jpg" rel="icon" type="favicon" />
         <link href="../css/index.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -428,24 +429,31 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <label for="txt_name" class="col-form-label font-weight-bold">Name<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="text" class="form-control" id="" name="txt_name" 
-                                       value="<?= $_SESSION['name'] ?>"
+                                       value="<?= $_SESSION['name'] ?>"  onkeyup="validateName(this.value)" 
                                        aria-describedby="txt_name_help" placeholder="Name" required="true">
+                                <small class="text-danger name-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <label for="txt_number" class="col-form-label font-weight-bold">Sender's Mobile: </label>
+                            <label for="txt_number" class="col-form-label font-weight-bold">Mobile: </label>
                             <div class="">
                                 <input type="number" class="form-control" id="" name="txt_number" 
                                        value="<?= $_SESSION['number'] ?>"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateSenderNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateSenderNumber(this.value)"
                                        aria-describedby="txt_number_help" placeholder="Number" required="true">
+                                <small class="text-danger number-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                            <label for="txt_email" class="col-form-label font-weight-bold">Sender's Email: </label>
+                            <label for="txt_email" class="col-form-label font-weight-bold">Email: </label>
                             <div class="">
                                 <input type="email" class="form-control" id="" name="txt_email" 
-                                       value="<?= $_SESSION['email'] ?>"
+                                       value="<?= $_SESSION['email'] ?>" onkeyup="validateSenderEmail(this.value)"
                                        aria-describedby="txt_email_help" placeholder="Email">
+                                <small class="text-danger email-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -490,21 +498,30 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <label for="txt_name" class="col-form-label font-weight-bold">Name<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="text" class="form-control txt_name" id="txt_name" name="txt_name" 
+                                        onkeyup="validateRecipientName(this.value)" 
                                        aria-describedby="txt_name_help" placeholder="Name" required="true">
+                                <small class="text-danger name-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_number" class="col-form-label font-weight-bold">Mobile: </label>
                             <div class="">
                                 <input type="number" class="form-control txt_number" id="txt_number" name="txt_number"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateRecipientNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateRecipientNumber(this.value)"
                                        aria-describedby="txt_number_help" placeholder="Number">
+                                <small class="text-danger number-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_email" class="col-form-label font-weight-bold">Email: </label>
                             <div class="">
                                 <input type="email" class="form-control txt_email" id="txt_email" name="txt_email" 
-                                       aria-describedby="txt_email_help" placeholder="Email">
+                                       aria-describedby="txt_email_help" 
+                                       placeholder="Email" onkeyup="validateRecipientEmail(this.value)">
+                                <small class="text-danger email-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">

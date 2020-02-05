@@ -152,6 +152,7 @@ if (!empty($arrPost = $_POST)) {
         </noscript>
         <div class="container-fluid">
             <?php include_once './header.php';
+            include_once './code/Utilities.php';
             include_once './calc-user-hits.php'; ?>
             <div class="container-fluid">
                 <?php 

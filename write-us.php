@@ -89,17 +89,17 @@ if (!empty($arrPost = $_POST)) {
                     if(mod < 6){
                         //	print error message for invalid number
                         res="Please enter a valid number.";
-                    $(".submmit").attr("disabled","");
+                    $(".submit").attr("disabled","");
                     } else {
-                        $(".submmit").removeAttr("disabled");
+                        $(".submit").removeAttr("disabled");
                     }
                 } else if(txt.length == 0){
                     res="";
-                    $(".submmit").removeAttr("disabled");
+                    $(".submit").removeAttr("disabled");
                 } else {
                 // print error message for invalid length
                     res="Please enter a valid number.";
-                    $(".submmit").attr("disabled","");
+                    $(".submit").attr("disabled","");
                 }
 		$(".number-validation").html(res);
             }
@@ -112,11 +112,11 @@ if (!empty($arrPost = $_POST)) {
                 var re = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
                 if(re.test(txt) == false){
                     res="Please enter a valid email.";
-                    $(".submmit").attr("disabled","");
+                    $(".submit").attr("disabled","");
                 }
                 else{
                     res="";
-                    $(".submmit").removeAttr("disabled");
+                    $(".submit").removeAttr("disabled");
                 }
                 $(".email-validation").html(res);
                 return res;
@@ -130,11 +130,11 @@ if (!empty($arrPost = $_POST)) {
                 var re = /^([A-Za-z\.]{3,})$/;
                 if(re.test(txt) == false){
                     res="Atleast 3 characters and only .(dot) is allowed in symbols.";
-                    $(".submmit").attr("disabled","");
+                    $(".submit").attr("disabled","");
                 }
                 else{
                     res="";
-                    $(".submmit").removeAttr("disabled");
+                    $(".submit").removeAttr("disabled");
                 }
                 $(".name-validation").html(res);
                 return res;
@@ -145,14 +145,14 @@ if (!empty($arrPost = $_POST)) {
              */
             function validateCity(txt){
                 res="";
-                var re = /^([A-Za-z\.]{3,})$/;
+                var re = /^([A-Za-z\.\ ]{3,})$/;
                 if(re.test(txt) == false){
                     res="Atleast 3 characters and only .(dot) is allowed in symbols.";
-                    $(".submmit").attr("disabled","");
+                    $(".submit").attr("disabled","");
                 }
                 else{
                     res="";
-                    $(".submmit").removeAttr("disabled");
+                    $(".submit").removeAttr("disabled");
                 }
                 $(".city-validation").html(res);
                 return res;
@@ -169,6 +169,7 @@ if (!empty($arrPost = $_POST)) {
         </noscript>
         <div class="container-fluid">
             <?php include_once './header.php'; 
+            include_once './code/Utilities.php';
             include_once './calc-user-hits.php';?>
             <div class="container-fluid">
                 <?php include_once './carousel.php'; ?>
@@ -218,7 +219,11 @@ if (!empty($arrPost = $_POST)) {
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="inputNumber4" class="font-weight-bold text-dark">Number<sup class="text-danger">*</sup></label>
-                                                <input type="number" class="form-control" required="" onkeyup="validateNumber(this.value)" name="number" id="inputNumber4" placeholder="Enter Password">
+                                                <input type="number" class="form-control" required="" 
+                                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateNumber(this.value)"
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                         maxlength="10"
+                                                       onkeyup="validateNumber(this.value)" name="number" id="inputNumber4" placeholder="Enter Mobile Number">
                                                 <small class="text-danger number-validation"></small>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -249,7 +254,7 @@ if (!empty($arrPost = $_POST)) {
                                         </div>
                                         <!--<i class="requiredFields"><sup class="text-danger font-weight-bold">*</sup>Indicates required fields.</i>-->
                                         <!--<br />-->
-                                        <input type="submit" name="call-us" class="btn btn-success mb-2 submmit" value="Save" />
+                                        <input type="submit" name="call-us" class="btn btn-success mb-2 submit" value="Save" />
                                         <input type="reset" class="btn btn-success mb-2" value="Reset" />
                                     </form>
                                     <?php

@@ -22,6 +22,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
         <script src="../js/jquery-3.2.1.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/u-courier-package.js" type="text/javascript"></script>
         <link href="../img/lg.jpg" rel="icon" type="favicon" />
         <link href="../css/index.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -165,37 +166,47 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputName4"  class="font-weight-bold">Name<span class="text-danger font-weight-bold">*</span>: </label>
-                                <input type="text" value="<?=$name?>" name="name" required=""
+                                <input type="text" value="<?=$name?>" name="name" required="" onkeyup="validateName(this.value)" 
                                        class="form-control" id="inputName4" placeholder="Enter your name.">
+                                <small class="text-danger name-validation"></small>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Email<span class="text-danger font-weight-bold">*</span>: </label>
-                                <input type="email" value="<?=$email?>" name="email" required=""
+                                <input type="email" value="<?=$email?>" name="email" required="" onkeyup="validateSenderEmail(this.value)"
                                        class="form-control" id="inputEmail4" placeholder="Enter your email.">
+                                <small class="text-danger email-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputNumber" class="font-weight-bold">Number<span class="text-danger font-weight-bold">*</span>: </label>
                                 <input type="number" value="<?=$number?>" name="number" required=""
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateSenderNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateSenderNumber(this.value)"
                                        class="form-control" id="inputNumber" placeholder="Enter your number.">
+                                <small class="text-danger number-sender-validation"></small>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputOccupation" class="font-weight-bold">Occupation: </label>
                                 <input type="text" value="<?=$occupation?>" class="form-control" name="occupation"
-                                       id="inputOccupation" placeholder="Enter your occupation.">
+                                       id="inputOccupation" placeholder="Enter your occupation." onkeyup="validateSenderName(this.value)">
+                                <small class="text-danger name-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputcity" class="font-weight-bold">City<span class="text-danger font-weight-bold">*</span>: </label>
-                                <input type="text" value="<?=$city?>" name="city" required=""
+                                <input type="text" value="<?=$city?>" name="city" required="" onkeyup="validateCity(this.value)"
                                        class="form-control" id="inputcity" placeholder="Enter your city.">
+                                <small class="text-danger city-validation"></small>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputState" class="font-weight-bold">State<span class="text-danger font-weight-bold">*</span>: </label>
-                                <input type="text" value="<?=$state?>" name="state" required=""
+                                <input type="text" value="<?=$state?>" name="state" required="" onkeyup="validateState(this.value)"
                                        class="form-control" id="inputState" placeholder="Enter your state.">
+                                <small class="text-danger state-validation"></small>
                             </div>
                         </div>
                         <div class="form-row">

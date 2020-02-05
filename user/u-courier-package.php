@@ -21,383 +21,12 @@ $adminType = ($adminType == 2 ? "hidden" : "");
         <script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <link href="../img/lg.jpg" rel="icon" type="favicon" />
+        <script src="js/u-courier-package.js" type="text/javascript"></script>
         <link href="../css/index.css" rel="stylesheet" type="text/css"/>
         <style>
-            @media (max-width: 330px) {  
-                .h1-font-size, .phone-font-size {font-size: 5vw;} /*1rem = 16px*/
-                .h2-font-size {font-size: 3vw;} /*1rem = 16px*/
-            }
-            /*@media (min-width: 220px) {  
-                .h1-font-size {font-size:1rem;} 1rem = 16px
-            }*/
-            @media (min-width: 330px) {  
-                .h1-font-size {font-size:1rem;}   
-                .h2-font-size {font-size:0.5rem;}  
-            }
-            @media (min-width: 544px) {  
-                .h1-font-size {font-size:1rem;}   
-                .h2-font-size {font-size:0.5rem;}  
-            }
-
-            /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-            @media (min-width: 768px) {  
-                .h1-font-size {font-size:1.5rem;}  
-                .h2-font-size {font-size:1rem;}  
-            }
-
-            /* Large devices (desktops, 992px and up) */
-            @media (min-width: 992px) { 
-                .h1-font-size {font-size:2rem;}   
-                .h2-font-size {font-size:1rem;}  
-            }
-
-            /* Extra large devices (large desktops, 1200px and up) */
-            @media (min-width: 1200px) {  
-                .h1-font-size {font-size:2rem;}    
-                .h2-font-size {font-size:1.5rem;}    
-            }
-            .font-size{
-                font-size: 2rem;
-            }
-            html{
-                scroll-behavior: smooth;
-            }
-            .tr-text-success{
-                color: #1E8449;
-            }
-            .separator {
-                display: flex;
-                align-items: center;
-                text-align: center;
-                margin-bottom: -2%;
-            }
-            .separator::before, .separator::after {
-                content: '';
-                flex: 1;
-                border-bottom: 3px solid #000;
-            }
-            .separator::before {
-                margin-right: 1.25em;
-            }
-            .separator::after {
-                margin-left: 1.25em;
-            }
-            a.disabled {
-                pointer-events: none;
-                cursor: default;
-            }.animation{
-                animation:blinkingText 1s infinite;
-                color: red;
-                font-weight: bold;
-            }
-            @keyframes blinkingText{
-                0%{color: #fff;}
-                49%{color: red;}
-                50%{color: red;}
-                99%{color:red;}
-                100%{color: #000;}
-            }
-            .border-width-2{
-                border-width: 2px !important;
-            }
-            .autocomplete {
-                position: relative;
-                display: inline-block;
-            }
-            .autocomplete-items {
-                position: absolute;
-                border: 1px solid #d4d4d4;
-                border-bottom: none;
-                border-top: none;
-                z-index: 99;
-                /*position the autocomplete items to be the same width as the container:*/
-                top: 100%;
-                left: 0;
-                right: 0;
-            }
-
-            .autocomplete-items div {
-                padding: 10px;
-                cursor: pointer;
-                background-color: #fff; 
-                border-bottom: 1px solid #d4d4d4; 
-            }
-
-            /*when hovering an item:*/
-            .autocomplete-items div:hover {
-                background-color: #e9e9e9; 
-            }
-
-            /*when navigating through the items using the arrow keys:*/
-            .autocomplete-active {
-                background-color: DodgerBlue !important; 
-                color: #ffffff; 
-            }
+            
         </style>
-        <script>
-            /*
-             * get time and date
-             */
-            function getTimeAndDate() {
-                to = $(".to").val();
-                from = $(".from").val();
-                weight = $(".weight").val();
-                bookingDate = $(".bookingDate").val();
-//                alert(to);
-                dateEntered = new Date(bookingDate.split("-")[0], bookingDate.split("-")[1] - 1, bookingDate.split("-")[2]);
-                var date = new Date();
-                today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-//                alert(dateEntered+"\n"+today);
-                if (to.length > 0 && to.length != 0 && from.length > 0 && from.length != 0 && weight.length > 0 && weight.length != 0 && bookingDate.length > 0 && bookingDate.length != 0) {
-                    if (dateEntered >= today) {
-                        $(".requiredFields").removeClass("animation");
-                        $.ajax({
-                            url: "../code/ajaxRequest.php?action=timeAndPrice",
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: {to: to, from: from, weight: weight, bookingDate: bookingDate},
-                            beforeSend: function () {
-                                // Show image container
-                                $(".handle-spinner").show();
-                            },
-                            success: function (result) {
-                                $(".table-data-content").removeAttr("hidden", "");
-                                $("#documentPrice").html(result['documentPrice']);
-                                $("#documentDate").html(result['documentDeliveryDate']);
-                                $("#airPrice").html(result['airPrice']);
-                                $("#airDate").html(result['airDeliveryDate']);
-                                $("#groundPrice").html(result['groundPrice']);
-                                $("#groundDate").html(result['groundDeliveryDate']);
-                                if (result == "ERROR") {
-                                    alert(result);
-                                }
-                            },
-                            complete: function (result) {
-                                // Hide image container
-                                $(".handle-spinner").hide();
-                            },
-                            statusCode: {
-                                404: function () {
-                                    alert("Something went wrong");
-                                }
-                            }
-                        });
-                    } else {
-                        alert("Booking date is earlier than today.");
-                    }
-                } else {
-                    $(".requiredFields").addClass("animation");
-                }
-            }
-
-            /*
-             * hide table and details associated
-             */
-            function hideTable() {
-                $(".table-data-content").attr("hidden", "");
-
-            }
-
-            /*
-             * getAddressData()
-             */
-            function getFromAddressData(from) {
-                $(".from").val(trimTheInput(from));
-                $.ajax({
-                    url: "../code/ajaxRequest.php?action=from",
-                    type: 'POST',
-//                    dataType: 'JSON',
-                    data: {from: from},
-                    beforeSend: function () {
-                        // Show image container
-//                        $(".handle-spinner").show();
-                    },
-                    success: function (result) {
-//                alert(result);
-                        $(".from-box").show();
-                        $(".from-box").html(result);
-                        $(".from").css("background", "#FFF");
-                        if (result == "ERROR") {
-                        }
-                    },
-                    complete: function (result) {
-                        // Hide image container
-                        $(".handle-spinner").hide();
-                    },
-                    statusCode: {
-                        404: function () {
-                            alert("Something went wrong");
-                        }
-                    }
-                });
-            }
-
-            /*
-             * getAddressData()
-             */
-            function getToAddressData(to) {
-                $(".to").val(trimTheInput(to));
-                $.ajax({
-                    url: "../code/ajaxRequest.php?action=to",
-                    type: 'POST',
-//                    dataType: 'JSON',
-                    data: {to: to},
-                    beforeSend: function () {
-                        // Show image container
-//                        $(".handle-spinner").show();
-                    },
-                    success: function (result) {
-                        $("#to-box").show();
-                        $("#to-box").html(result);
-                        $(".to").css("background", "#FFF");
-                        if (result == "ERROR") {
-                        }
-                    },
-                    complete: function (result) {
-                        // Hide image container
-                        $(".handle-spinner").hide();
-                    },
-                    statusCode: {
-                        404: function () {
-                            alert("Something went wrong");
-                        }
-                    }
-                });
-            }
-
-            function selectFrom(val) {
-                $("#from").val(val);
-                $("#from-box").hide();
-            }
-
-            function selectTo(val) {
-                $("#to").val(val);
-                $("#to-box").hide();
-            }
-
-            /*
-             * trim function value
-             */
-            function trimTheInput(text) {
-                return text.replace(/ +(?= )/g, '');
-            }
-
-            /*
-             * document 
-             */
-            function shipAsDocument() {
-                $action = $("#book-courier-package-form").attr("action");
-                $documentPrice = $("#documentPrice").text();
-                $documentDate = $("#documentDate").text();
-                $action = $action + "&service=Document&deliveryDate=" + $documentDate + "&price=" + $documentPrice;
-                $("#book-courier-package-form").attr("action", $action);
-                $("#book-courier-package-form").submit();
-            }
-            /*
-             * ship by Air 
-             */
-            function shipByAir() {
-                $action = $("#book-courier-package-form").attr("action");
-                $airPrice = $("#airPrice").text();
-                $airDate = $("#airDate").text();
-                $action = $action + "&service=Air&deliveryDate=" + $airDate + "&price=" + $airPrice;
-                $("#book-courier-package-form").attr("action", $action);
-                $("#book-courier-package-form").submit();
-            }
-            /*
-             * ship by Ground
-             */
-            function shipByGround() {
-                $action = $("#book-courier-package-form").attr("action");
-                $groundPrice = $("#groundPrice").text();
-                $groundDate = $("#groundDate").text();
-                $action = $action + "&service=Ground&deliveryDate=" + $groundDate + "&price=" + $groundPrice;
-                $("#book-courier-package-form").attr("action", $action);
-                $("#book-courier-package-form").submit();
-            }
-            
-            /*
-             * get-booked-courier-data
-             */
-            function getBookedCourierData() {
-                $(document).on("click", ".data-edit", function () {
-                    var courierId = $(this).attr("id");
-                    $.ajax({
-                        url: 'code/u-ajaxRequest.php?action=get-booked-courier-data',
-                        method: 'POST',
-                        data: {courierId: courierId},
-                        dataType: 'json',
-                        success: function (data) {
-                            $('#int_courier_booking_id').val(data.int_courier_booking_id);
-                            $('#senderName').val(data.txt_sender_name);
-                            $('#senderNumber').val(data.txt_sender_mobile);
-                            $('#senderEmail').val(data.txt_sender_email);
-                            $('#senderAddressLine1').val(data.txt_sender_address_line1);
-                            $('#origin').val(data.txt_origin);
-                            $('#courierItem').val(data.txt_courier_item_content);
-                            $('#courierWeight').val(data.txt_weight);
-                            $('#courierItemPieces').val(data.int_courier_item_pieces);
-                            $('#recipientName').val(data.txt_recipient_name);
-                            $('#recipientNumber').val(data.txt_recipient_mobile);
-                            $('#recipientAlternativeNumber').val(data.txt_recipient_alternate_mobile);
-                            $('#recipientEmail').val(data.txt_recipient_email);
-                            $('#recipientAddressLine1').val(data.txt_recipient_address_line1);
-                            $('#destination').val(data.txt_destination);
-                            $('#dateBooked').val(data.dat_booked);
-                            $('#serviceType').val(data.txt_transport_mode);
-                            $('#courierStatus').val(data.txt_courier_status);
-                            $('#updateCourierPackage').modal('show');
-                        }
-                    });
-                });
-            }
-            
-            /*
-             * get-booked-courier-data
-             */
-            function getBookedCourierDataInView() {
-                $(document).on("click", ".data-view", function () {
-                    var courierId = $(this).attr("id");
-                    $.ajax({
-                        url: 'code/u-ajaxRequest.php?action=get-booked-courier-data',
-                        method: 'POST',
-                        data: {courierId: courierId},
-                        dataType: 'json',
-                        success: function (data) {
-                            $('.int_courier_booking_id').val(data.int_courier_booking_id);
-                            $('.senderName').val(data.txt_sender_name);
-                            $('.senderNumber').val(data.txt_sender_mobile);
-                            $('.senderEmail').val(data.txt_sender_email);
-                            $('.senderAddressLine1').val(data.txt_sender_address_line1);
-                            $('.origin').val(data.txt_origin);
-                            $('.courierItem').val(data.txt_courier_item_content);
-                            $('.courierWeight').val(data.txt_weight);
-                            $('.courierItemPieces').val(data.int_courier_item_pieces);
-                            $('.recipientName').val(data.txt_recipient_name);
-                            $('.recipientNumber').val(data.txt_recipient_mobile);
-                            $('.recipientAlternativeNumber').val(data.txt_recipient_alternate_mobile);
-                            $('.recipientEmail').val(data.txt_recipient_email);
-                            $('.recipientAddressLine1').val(data.txt_recipient_address_line1);
-                            $('.destination').val(data.txt_destination);
-                            $('.dateBooked').val(data.dat_booked);
-                            $('.txt_service_type').val(data.txt_transport_mode);
-                            $('.courierStatus').val(data.txt_courier_status);
-                            $('#viewCourierPackage').modal('show');
-                        }
-                    });
-                });
-            }
-
-            /*
-             * get-booked-courier-data
-             */
-            function deleteBookedCourierData(courierId) {
-                var res = confirm("Are you sure to delete this item?");
-                if(res){
-                    window.location.href = "code/u-ajaxRequest.php?action=delete-booked-courier-data&courierId="+courierId;
-                }
-            }
-
+        <script>    
         </script>
     </head>
     <body class="bg-light" oncontextmenu="return false;">
@@ -664,8 +293,9 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <label for="txt_sender_name" class="col-form-label font-weight-bold">Sender's(S) Name<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" 
-                                       value="<?= $_SESSION['name'] ?>"
+                                       value="<?= $_SESSION['name'] ?>"  onkeyup="validateSenderName(this.value)"
                                        aria-describedby="txt_sender_name_help" placeholder="Sender Name" required="true">
+                                <small class="text-danger name-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -673,16 +303,22 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <div class="">
                                 <input type="number" class="form-control" id="txt_sender_number" name="txt_sender_number" 
                                        value="<?= $_SESSION['number'] ?>"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateSenderNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10" 
+                                       onkeyup="validateSenderNumber(this.value)"
                                        aria-describedby="txt_sender_number_help" placeholder="Sender Number" required="true">
+                                <small class="text-danger number-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_sender_email" class="col-form-label font-weight-bold">Sender's Email: </label>
                             <div class="">
                                 <input type="email" class="form-control" id="txt_sender_email" name="txt_sender_email" 
-                                       value="<?= $_SESSION['email'] ?>"
+                                       value="<?= $_SESSION['email'] ?>" onkeyup="validateSenderEmail(this.value)" 
                                        aria-describedby="txt_sender_email_help" placeholder="Sender Email">
                             </div>
+                            <small class="text-danger email-sender-validation"></small>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_sender_address_line1" class="col-form-label font-weight-bold">Sender's Address: </label>
@@ -703,21 +339,31 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_courier_item" class="col-form-label font-weight-bold">Item<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
-                                <input type="text" class="form-control" id="txt_sender_name" name="txt_courier_item" 
+                                <input type="text" class="form-control" id="txt_sender_name"
+                                        onkeyup="validateName(this.value)" name="txt_courier_item" 
                                        aria-describedby="txt_courier_item" placeholder="Courier Item" required="true">
+                                <small class="text-danger name-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_courier_item_pieces" class="col-form-label font-weight-bold">Pieces: </label>
                             <div class="">
-                                <input type="number" class="form-control" id="txt_sender_name" name="txt_courier_item_pieces" 
+                                <input type="number" class="form-control" id="txt_sender_name"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="2"
+                                        name="txt_courier_item_pieces" 
                                        aria-describedby="txt_courier_item_pieces" placeholder="Courier Item Pieces" >
+                                <small class="text-danger number-pieces"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="weight" class="col-form-label font-weight-bold">Weight (in kgs)<sup class="text-danger">*</sup>: </label>
                             <div class="">
-                                <input type="number" class="form-control weight" onclick="hideTable()" name="weight" id="weight"
+                                <input type="number" class="form-control weight" onclick="hideTable()"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="3" name="weight" id="weight"
                                        placeholder="kgs" required="" >
                             </div>
                         </div>
@@ -725,28 +371,45 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <label for="txt_recipient_name" class="col-form-label font-weight-bold">Recipient's Name<sup class="text-danger">*</sup>: </label>
                             <div class="">
                                 <input type="text" class="form-control" id="txt_recipient_name" name="txt_recipient_name" 
+                                       onkeyup="validateRecipientName(this.value)"
                                        aria-describedby="txt_recipient_name" placeholder="Recipient Name" required="true">
+                                <small class="text-danger name-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_number" class="col-form-label font-weight-bold">Recipient's Mobile<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
-                                <input type="number" class="form-control" id="txt_recipient_number" name="txt_recipient_number" 
-                                       aria-describedby="txt_recipient_number" placeholder="Recipient Number" required="true">
+                                <input type="number" class="form-control" id="txt_recipient_number"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateRecipientNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateRecipientNumber(this.value)" name="txt_recipient_number" 
+                                       aria-describedby="txt_recipient_number" placeholder="Recipient Number" 
+                                       required="true">
+                                <small class="text-danger number-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_alternate_number" class="col-form-label font-weight-bold">Alternate Mobile: </label>
                             <div class="">
-                                <input type="number" class="form-control" id="txt_recipient_alternate_number" name="txt_recipient_alternate_number" 
-                                       aria-describedby="txt_recipient_alternate_number" placeholder="Recipient Alternate Number" >
+                                <input type="number" class="form-control" id="txt_recipient_alternate_number"
+                                       name="txt_recipient_alternate_number" 
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateAlternateNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateRecipientAlternateNumber(this.value)" name="txt_recipient_number" 
+                                       aria-describedby="txt_recipient_alternate_number" 
+                                       placeholder="Recipient Alternate Number" >
+                                <small class="text-danger alternate-number-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_email" class="col-form-label font-weight-bold">Recipient's Email: </label>
                             <div class="">
-                                <input type="email" class="form-control" id="txt_recipient_email" name="txt_recipient_email" 
+                                <input type="email" class="form-control" id="txt_recipient_email"
+                                       onkeyup="validateRecipientEmail(this.value)"  name="txt_recipient_email" 
                                        aria-describedby="txt_recipient_email" placeholder="Recipient Email">
+                            <small class="text-danger email-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -787,16 +450,10 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                                 </select>
                             </div>
                         </div>
-                        <!--                        <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                                                    <label for="validatedCustomFile" class="col-form-label font-weight-bold">Upload Image: </label>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="file" id="validatedCustomFile" >
-                                                        <label class="custom-file-label" for="validatedCustomFile">Choose File...</label>
-                                                    </div>
-                                                </div>-->
                     </div>
                     <div class="form-group mt-3 mb-5">
-                        <input type="button" onclick="getTimeAndDate();hideTable();" class="btn btn-secondary mt-2 font-weight-bold" value="Find" />
+                        <input type="button" onclick="getTimeAndDate();hideTable();" 
+                               class="btn btn-secondary mt-2 font-weight-bold submit" value="Find" />
                         <input type="reset" onclick="hideTable()" class="btn btn-secondary mt-2 font-weight-bold" value="Reset" />
                     </div>
                 </form>
@@ -892,24 +549,30 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                             <label for="txt_sender_name" class="col-form-label font-weight-bold">Sender's Name<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="text" class="form-control senderName" id="senderName" name="txt_sender_name" 
-                                       value="<?= $_SESSION['name'] ?>"
+                                       value="<?= $_SESSION['name'] ?>" onkeyup="validateUpdateSenderName(this.value)"
                                        aria-describedby="txt_sender_name_help" placeholder="Sender Name" required="true">
                             </div>
+                                <small class="text-danger update-name-sender-validation"></small>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_sender_number" class="col-form-label font-weight-bold">Sender's Mobile<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="number" class="form-control senderNumber" id="senderNumber" name="txt_sender_number" 
-                                       value="<?= $_SESSION['number'] ?>"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateUpdateSenderNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       value="<?= $_SESSION['number'] ?>" onkeyup="validateUpdateSenderNumber(this.value)"
                                        aria-describedby="txt_sender_number_help" placeholder="Sender Number" required="true">
+                                <small class="text-danger update-number-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_sender_email" class="col-form-label font-weight-bold">Sender's Email: </label>
                             <div class="">
                                 <input type="email" class="form-control senderEmail" id="senderEmail" name="txt_sender_email" 
-                                       value="<?= $_SESSION['email'] ?>"
+                                       value="<?= $_SESSION['email'] ?>" onkeyup="validateUpdateRecipientEmail(this.value)" 
                                        aria-describedby="txt_sender_email_help" placeholder="Sender Email">
+                                <small class="text-danger update-email-sender-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -933,50 +596,76 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_courier_item" class="col-form-label font-weight-bold">Item<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
-                                <input type="text" class="form-control courierItem" id="courierItem" name="txt_courier_item" 
+                                <input type="text" class="form-control courierItem" id="courierItem"
+                                        onkeyup="validateUpdateName(this.value)" name="txt_courier_item" 
                                        aria-describedby="txt_courier_item" placeholder="Courier Item" required="true">
+                                <small class="text-danger number-update-pieces"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_courier_item_pieces" class="col-form-label font-weight-bold">Pieces: </label>
                             <div class="">
-                                <input type="number" class="form-control courierItemPieces" id="courierItemPieces" name="txt_courier_item_pieces" 
+                                <input type="number" class="form-control courierItemPieces" id="courierItemPieces"
+                                      name="txt_courier_item_pieces" 
+                                      onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="2"
                                        aria-describedby="txt_courier_item_pieces" placeholder="Courier Item Pieces" >
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="weight" class="col-form-label font-weight-bold weight">Weight (in kgs)<sup class="text-danger">*</sup>: </label>
                             <div class="">
-                                <input type="number" class="form-control courierWeight" onclick="hideTable()" name="weight" id="courierWeight"
+                                <input type="number" class="form-control courierWeight" onclick="hideTable()" 
+                                       name="weight" id="courierWeight"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="3"
                                        placeholder="kgs" required="" >
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_name" class="col-form-label font-weight-bold">Recipient's Name<sup class="text-danger">*</sup>: </label>
                             <div class="">
-                                <input type="text" class="form-control recipientName" id="recipientName" name="txt_recipient_name" 
+                                <input type="text" class="form-control recipientName" id="recipientName"
+                                       onkeyup="validateUpdateRecipientName(this.value)" name="txt_recipient_name" 
                                        aria-describedby="txt_recipient_name" placeholder="Recipient Name" required="true">
+                                <small class="text-danger name-update-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_number" class="col-form-label font-weight-bold">Recipient's Mobile<sup class="text-danger font-weight-bold">*</sup>: </label>
                             <div class="">
                                 <input type="number" class="form-control recipientNumber" id="recipientNumber" name="txt_recipient_number" 
-                                       aria-describedby="txt_recipient_number" placeholder="Recipient Number" required="true">
+                                       aria-describedby="txt_recipient_number" 
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateRecipientUpdateNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateRecipientUpdateNumber(this.value)"
+                                       placeholder="Recipient Number" required="true">
+                                <small class="text-danger number-update-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_alternate_number" class="col-form-label font-weight-bold">Alternate Mobile: </label>
                             <div class="">
-                                <input type="number" class="form-control recipientAlternativeNumber" id="recipientAlternativeNumber" name="txt_recipient_alternate_number" 
+                                <input type="number" class="form-control recipientAlternativeNumber" 
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateRecipientUpdateAlternateNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                         maxlength="10"
+                                       onkeyup="validateRecipientUpdateAlternateNumber(this.value)" 
+                                       id="recipientAlternativeNumber" name="txt_recipient_alternate_number" 
                                        aria-describedby="txt_recipient_alternate_number" placeholder="Recipient Alternate Number" >
                             </div>
+                                <small class="text-danger alternate-number-update-recipient-validation"></small>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <label for="txt_recipient_email" class="col-form-label font-weight-bold">Recipient's Email: </label>
                             <div class="">
-                                <input type="email" class="form-control recipientEmail" id="recipientEmail" name="txt_recipient_email" 
+                                <input type="email" class="form-control recipientEmail" id="recipientEmail" 
+                                       onkeyup="validateUpdateRecipientEmail(this.value)"  name="txt_recipient_email" 
                                        aria-describedby="txt_recipient_email" placeholder="Recipient Email">
+                                <small class="text-danger email-update-recipient-validation"></small>
                             </div>
                         </div>
                         <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -1039,7 +728,8 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         </div>
                     </div>
                     <div class="form-group mt-3 ">
-                        <input type="submit" onclick="getTimeAndDate();hideTable();" class="btn btn-secondary mt-2 font-weight-bold" value="Submit" />
+                        <input type="submit" onclick="getTimeAndDate();hideTable();"
+                               class="btn btn-secondary mt-2 font-weight-bold submit" value="Submit" />
                         <!--<input type="reset" onclick="hideTable()" class="btn btn-secondary mt-2 font-weight-bold" value="Reset" />-->
                     </div>
                 </form>

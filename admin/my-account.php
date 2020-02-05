@@ -91,6 +91,24 @@ $adminType = ($adminType == 2 ? "hidden" : "");
         </style>
         <script>
             
+            /*
+             * validate name
+             */
+            function validateName(txt){
+                res="";
+                var re = /^([A-Za-z\. ]{3,})$/;
+                if(re.test(txt) == false){
+                    res="Atleast 3 characters and only .(dot) is allowed in symbols.";
+                    $(".submmit").attr("disabled","");
+                }
+                else{
+                    res="";
+                    $(".submmit").removeAttr("disabled");
+                }
+                $(".name-validation").html(res);
+                return res;
+            }
+            
         </script>
     </head>
     <body class="bg-light" oncontextmenu="return false;">
@@ -150,7 +168,9 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputName4"  class="font-weight-bold">Name<span class="text-danger font-weight-bold">*</span></label>
-                                <input type="text" value="<?=$name?>" name="name" required="" class="form-control" id="inputName4" placeholder="Enter your name.">
+                                <input type="text" value="<?=$name?>" name="name" onkeyup="validateName(this.value)"
+                                       required="" class="form-control" id="inputName4" placeholder="Enter your name.">
+                                <small class="text-danger name-validation"></small>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4" class="font-weight-bold">Email<span class="text-danger font-weight-bold">*</span></label>
@@ -169,7 +189,7 @@ $adminType = ($adminType == 2 ? "hidden" : "");
                         </div>
                         <input type="text" value="<?=$registrationId?>" name="registrationId" hidden="" class="form-control">
                         <input type="text" value="<?=$loginId?>" name="loginId" hidden="" class="form-control">
-                        <button type="submit" class="btn btn-secondary my-3 font-weight-bold">Modify</button>
+                        <button type="submit" class="btn btn-secondary my-3 font-weight-bold submit">Modify</button>
                     </form>
                 </div>
             </div>

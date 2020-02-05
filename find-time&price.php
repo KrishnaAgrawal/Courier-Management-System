@@ -214,6 +214,7 @@ include_once './constants.php';
         </noscript>
         <div class="container-fluid">
             <?php include_once './header.php'; 
+            include_once './code/Utilities.php';
             include_once './calc-user-hits.php';?>
             <div class="bd-example">
                 <?php include_once './carousel.php'; ?>
@@ -244,6 +245,9 @@ include_once './constants.php';
                             <div class="form-group col-md-6">
                                 <label for="weight" class="font-weight-bold">Weight (in kgs)<sup class="text-danger">*</sup></label>
                                 <input type="number" class="form-control" onclick="hideTable()" name="weight" id="weight"
+                                       onmousewheel="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);validateNumber(this.value)"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="3"
                                        placeholder="kgs">
                             </div>
                             <div class="form-group col-md-6">

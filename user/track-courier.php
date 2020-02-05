@@ -155,6 +155,6 @@ if (!empty($trackingId = $_GET['txt_tracking_id'])) {
         }
     }
 }
-echo "<script>alert('Please enter correct Tracking ID');window.history.back();</script>";
+echo "<script>alert('Enter your Tracking ID without any space which starts with \'AWB\'');window.history.back();</script>";
 //}
 ?>

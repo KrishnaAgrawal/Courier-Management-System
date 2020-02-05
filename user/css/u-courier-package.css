@@ -1,0 +1,110 @@
+@media (max-width: 330px) {  
+    .h1-font-size, .phone-font-size {font-size: 5vw;} /*1rem = 16px*/
+    .h2-font-size {font-size: 3vw;} /*1rem = 16px*/
+}
+/*@media (min-width: 220px) {  
+    .h1-font-size {font-size:1rem;} 1rem = 16px
+}*/
+@media (min-width: 330px) {  
+    .h1-font-size {font-size:1rem;}   
+    .h2-font-size {font-size:0.5rem;}  
+}
+@media (min-width: 544px) {  
+    .h1-font-size {font-size:1rem;}   
+    .h2-font-size {font-size:0.5rem;}  
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+    .h1-font-size {font-size:1.5rem;}  
+    .h2-font-size {font-size:1rem;}  
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .h1-font-size {font-size:2rem;}   
+    .h2-font-size {font-size:1rem;}  
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+    .h1-font-size {font-size:2rem;}    
+    .h2-font-size {font-size:1.5rem;}    
+}
+.font-size{
+    font-size: 2rem;
+}
+html{
+    scroll-behavior: smooth;
+}
+.tr-text-success{
+    color: #1E8449;
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: -2%;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 3px solid #000;
+}
+.separator::before {
+    margin-right: 1.25em;
+}
+.separator::after {
+    margin-left: 1.25em;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}.animation{
+    animation:blinkingText 1s infinite;
+    color: red;
+    font-weight: bold;
+}
+@keyframes blinkingText{
+    0%{color: #fff;}
+    49%{color: red;}
+    50%{color: red;}
+    99%{color:red;}
+    100%{color: #000;}
+}
+.border-width-2{
+    border-width: 2px !important;
+}
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+}
