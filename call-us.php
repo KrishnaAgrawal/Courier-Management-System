@@ -2,13 +2,12 @@
 <?php
 include_once './constants.php';
 $location = '';
+$result = [];
 if (!empty($arrPost = $_POST)) {
     if (!empty($arrPost['call-us'])) {
         $location = $arrPost['location'];
         include_once './code/ajaxRequest.php';
         include_once './code/Utilities.php';
-        $result = getResultAddressOfGivenLoaction($arrPost);
-//        echo '<pre>';print_r($result->fetch_array());exit;
     }
 //        echo '<pre>';print_r($location);exit;
 }
@@ -190,8 +189,11 @@ if (!empty($arrPost = $_POST)) {
                                     <?php
                                         include_once './goToTop.php';
                                         $totalCount = 0;
+                                        $result = getResultAddressOfGivenLoaction($arrPost);
+//                                        echo '<pre>';print_r($result->fetch_array());exit;
                                         if(!empty($result)){
-                                            if($result->num_rows > 0){
+//                                            if($result->num_rows > 0){
+//                                                    echo '<pre>';print_r($result);exit;
 //                                                $totalCount = $result->num_rows;
                                         ?>
                                         <?php
@@ -275,7 +277,7 @@ if (!empty($arrPost = $_POST)) {
                                         </div>
                                         <?php
                                             }
-                                        }
+//                                        }
                                         ?>
                                 </div>
                             </div>
